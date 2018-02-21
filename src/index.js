@@ -12,6 +12,36 @@ axios.get(`${BASE_URL}/api/coins`).then(response => {
   console.log('Data has been assigned to global variable')
 })
 
+bot.onText(/\/events/, message => {
+  const chatId = message.chat.id
+
+  let strEvent
+
+  axios.get(`${BASE_URL}/api/events`, {
+    params: {
+      max: 3
+    }
+  }).then(response => {
+    const events = response.data
+
+    strEvent = 'Here are the latest events:\n\n'
+
+    events.forEach(event => {
+      const coinName = event.coins[0].name
+      const coinSymbol = event.coins[0].symbol
+
+      strEvent += `${coinName} (${coinSymbol})\nTitle: ${event.title}\nDate: ${new Date(event.date_event).toLocaleDateString()}\nMore details: ${event.source}\n\n`
+    })
+
+    strEvent += `More events can be found on ${BASE_URL}`
+
+    bot.sendMessage(chatId, strEvent, {
+      disable_web_page_preview: true,
+      reply_to_message_id: message.message_id
+    }).then(() => console.log('Message sent'))
+  })
+})
+
 bot.onText(/\/event (.+)/, (message, match) => {
   const chatId = message.chat.id
   const coin = match[1]
