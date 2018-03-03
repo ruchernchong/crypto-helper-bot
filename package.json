@@ -1,7 +1,7 @@
 {
-  "name": "coin-event-bot",
+  "name": "crypto-helper",
   "version": "1.0.0",
-  "description": "A Telegram bot to retrieve events of crypto currencies.",
+  "description": "A Telegram bot designed as a helper for Cryptocurrency.",
   "main": "src/index.js",
   "repository": "https://github.com/ruchern/crypto-helper.git",
   "author": "Ru Chern Chong <me@ruchern.com>",
