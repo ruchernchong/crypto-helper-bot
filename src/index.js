@@ -3,6 +3,8 @@ const axios = require('axios')
 const TelegramBot = require('node-telegram-bot-api')
 const bot = new TelegramBot(token, {polling: true})
 
+axios.defaults.headers.common['user-agent'] = 'Crypto Helper/1.0.0'
+
 const BASE_URL = 'https://coinmarketcal.com'
 
 let coinList
@@ -10,6 +12,8 @@ let coinList
 axios.get(`${BASE_URL}/api/coins`).then(response => {
   coinList = response.data
   console.log('Data has been assigned to global variable')
+}).catch(error => {
+  console.log(error)
 })
 
 bot.onText(/\/events/, message => {
