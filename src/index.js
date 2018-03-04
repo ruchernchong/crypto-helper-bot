@@ -38,8 +38,6 @@ bot.onText(/\/events/, message => {
       strEvent += `${coinName} (${coinSymbol})\nTitle: ${event.title}\nDate: ${new Date(event.date_event).toLocaleDateString()}\nMore details: ${event.source}\n\n`
     })
 
-    strEvent += `More events can be found on ${CAL_BASE_URL}`
-
     bot.sendMessage(chatId, strEvent, {
       parse_mode: 'markdown',
       disable_web_page_preview: true
