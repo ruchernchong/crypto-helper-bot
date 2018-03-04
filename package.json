@@ -6,7 +6,7 @@
   "repository": "https://github.com/ruchern/crypto-helper.git",
   "author": "Ru Chern Chong <me@ruchern.com>",
   "license": "MIT",
-  "private": true,
+  "private": false,
   "scripts": {
     "start": "node src/index.js",
     "lint": "eslint --ext .js src"
