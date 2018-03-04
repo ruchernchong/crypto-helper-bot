@@ -1,5 +1,8 @@
 # Changelog
 
+## Unreleased
+- Dynamically set the version for user-agent spoof
+
 ## v1.0.0
 Initial release of the Crypto Helper Telegram bot.
 

@@ -2,8 +2,9 @@ const {token} = require('./../keys')
 const axios = require('axios')
 const TelegramBot = require('node-telegram-bot-api')
 const bot = new TelegramBot(token, {polling: true})
+const config = require('./../package')
 
-axios.defaults.headers.common['user-agent'] = 'Crypto Helper/1.0.0'
+axios.defaults.headers.common['user-agent'] = `Crypto Helper/${config.version}`
 
 const CAL_BASE_URL = 'https://coinmarketcal.com'
 const COIN_BASE_URL = 'https://coincap.io'
