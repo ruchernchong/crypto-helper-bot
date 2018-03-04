@@ -41,8 +41,8 @@ bot.onText(/\/events/, message => {
     strEvent += `More events can be found on ${CAL_BASE_URL}`
 
     bot.sendMessage(chatId, strEvent, {
-      disable_web_page_preview: true,
-      reply_to_message_id: message.message_id
+      parse_mode: 'markdown',
+      disable_web_page_preview: true
     }).then(() => console.log('Found events. Returning the 3 latest events.'))
   })
 })
@@ -70,17 +70,12 @@ bot.onText(/\/event (.+)/, (message, match) => {
         reply = `There are no event(s) for ${coinList[index]}.`
       }
 
-      bot.sendMessage(chatId, reply, {
-        reply_to_message_id: message.message_id
-      }).then(() => console.log(`Event found for ${coin}.`))
+      bot.sendMessage(chatId, reply, {parse_mode: 'markdown'}).then(() => console.log(`Event found for ${coin}.`))
     })
   } else {
     const reply = `Unable to find *${coin}*. This coin might not exist (yet).`
 
-    bot.sendMessage(chatId, reply, {
-      parse_mode: 'markdown',
-      reply_to_message_id: message.message_id
-    }).then(() => console.log(`Unable to find ${coin}.`))
+    bot.sendMessage(chatId, reply, {parse_mode: 'markdown'}).then(() => console.log(`Unable to find ${coin}.`))
   }
 })
 
