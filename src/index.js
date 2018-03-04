@@ -13,9 +13,7 @@ let coinList
 axios.get(`${CAL_BASE_URL}/api/coins`).then(response => {
   coinList = response.data
   console.log('Data has been assigned to global variable')
-}).catch(error => {
-  console.log(error)
-})
+}).catch(error => console.log(error))
 
 bot.onText(/\/events/, message => {
   const chatId = message.chat.id
