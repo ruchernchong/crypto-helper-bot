@@ -75,6 +75,18 @@ bot.onText(/\/event (.+)/, (message, match) => {
   }
 })
 
+bot.onText(/\/mcap/, message => {
+  const chatId = message.chat.id
+
+  axios.get(`${COIN_BASE_URL}/global`).then(response => {
+    const data = response.data
+
+    const reply = `Total Market Cap: _$${data.totalCap.toLocaleString('en')}_`
+
+    bot.sendMessage(chatId, reply, {parse_mode: 'markdown'}).then(() => console.log('Total Market Cap'))
+  })
+})
+
 bot.onText(/\/coin (.+)/, (message, match) => {
   const chatId = message.chat.id
   const coin = match[1]
