@@ -95,7 +95,7 @@ bot.onText(/\/coin (.+)/, (message, match) => {
     const data = response.data
 
     const rank = `*Rank:* _${data.rank}_`
-    const mCap = `*Est. Market Cap:* _${data.market_cap.toLocaleString('en')}_`
+    const mCap = `*Est. Market Cap (USD):* _$${data.market_cap.toLocaleString('en')}_`
     const priceUSD = `*USD:* _$${data.price_usd}_`
     const priceBTC = `*BTC:* _${data.price_btc} BTC_`
     const priceETH = `*ETH:* _${data.price_eth} ETH_`
