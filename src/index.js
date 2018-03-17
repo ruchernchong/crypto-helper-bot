@@ -90,7 +90,7 @@ bot.onText(/\/mcap/, message => {
 
 bot.onText(/\/price (.+)/, async (message, match) => {
   const chatId = message.chat.id
-  const coin = match[1]
+  const inputSymbol = match[1]
 
   let coinList
 
@@ -108,5 +108,5 @@ bot.onText(/\/price (.+)/, async (message, match) => {
 
   const reply = `Price for *${coinDetail.name} (${coinDetail.symbol})*:\n\n${rank}\n${mCap}\n${priceUSD}\n${priceBTC}\n${priceDelta}`
 
-  bot.sendMessage(chatId, reply, { parse_mode: 'markdown' }).then(() => console.log(`Found price for ${coin}`))
+  bot.sendMessage(chatId, reply, { parse_mode: 'markdown' }).then(() => console.log(`Found price for ${inputSymbol}`))
 })
