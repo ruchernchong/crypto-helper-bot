@@ -2,7 +2,7 @@
 
 ## Unreleased
 - Fixed coin prices not showing for certain coins
-- Dynamically set the version for user-agent spoof
+- Fixed events crashing by dynamically setting the version to spoof the user-agent
 
 ## v1.0.0
 Initial release of the Crypto Helper Telegram bot
