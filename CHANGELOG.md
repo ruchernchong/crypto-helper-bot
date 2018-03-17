@@ -3,7 +3,6 @@
 ## Unreleased
 - Added Bitcoin dominance to market cap command
 - Fixed command for retrieving total market cap
-- Fixed a bug where coin symbols in lowercase does not work
 
 ## v1.0.1
 - Fixed coin prices not showing for certain coins

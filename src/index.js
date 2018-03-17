@@ -76,15 +76,18 @@ bot.onText(/\/event (.+)/, (message, match) => {
   }
 })
 
-bot.onText(/\/mcap/, message => {
+bot.onText(/\/mcap/, async message => {
   const chatId = message.chat.id
 
-  axios.get(`${PRICE_BASE_URL}/global`).then(response => {
+  await axios.get(`${PRICE_BASE_URL}/v1/global`).then(response => {
     const data = response.data
 
-    const reply = `Total Market Cap: _$${data.totalCap.toLocaleString('en')}_`
+    const marketCap = `_$${parseFloat(data.total_market_cap_usd).toLocaleString('en')}_`
+    const bitcoinDominace = `_${parseFloat(data.bitcoin_percentage_of_market_cap).toFixed(2)}%_`
 
-    bot.sendMessage(chatId, reply, { parse_mode: 'markdown' }).then(() => console.log('Total Market Cap'))
+    const reply = `*Total Market Cap:* ${marketCap}\n*Bitcoin Dominance:* ${bitcoinDominace}`
+
+    bot.sendMessage(chatId, reply, { parse_mode: 'markdown' }).then(() => console.log('Total Market Cap in USD'))
   })
 })
 
