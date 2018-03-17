@@ -1,10 +1,11 @@
 # Changelog
 
 ## Unreleased
+- Fixed coin prices not showing for certain coins
 - Dynamically set the version for user-agent spoof
 
 ## v1.0.0
-Initial release of the Crypto Helper Telegram bot.
+Initial release of the Crypto Helper Telegram bot
 
 ### Features:
 - List 3 most recent events
