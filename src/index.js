@@ -98,7 +98,7 @@ bot.onText(/\/price (.+)/, async (message, match) => {
     coinList = response.data
   })
 
-  const coinDetail = coinList.filter(item => item.symbol === coin)[0]
+  const coinDetail = coinList.filter(item => item.symbol === inputSymbol.toUpperCase())[0]
 
   const rank = `*Rank:* _${coinDetail.rank}_`
   const mCap = `*Est. Market Cap (USD):* _$${parseFloat(coinDetail.market_cap_usd).toLocaleString('en')}_`
