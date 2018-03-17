@@ -20,25 +20,26 @@ bot.onText(/\/events/, message => {
   const chatId = message.chat.id
 
   let strEvent
+  const maxEvents = 3
 
   axios.get(`${CAL_BASE_URL}/api/events`, {
     params: {
-      max: 3
+      max: maxEvents
     }
   }).then(response => {
     const events = response.data
 
-    strEvent = 'Here are the latest events:\n\n'
+    strEvent = `Here are the latest ${maxEvents} events:\n\n`
 
     events.forEach(event => {
       const coinName = event.coins[0].name
       const coinSymbol = event.coins[0].symbol
 
-      strEvent += `${coinName} (${coinSymbol})\nTitle: ${event.title}\nDate: ${new Date(event.date_event).toLocaleDateString()}\nMore details: ${event.source}\n\n`
+      strEvent += `<b>${coinName} (${coinSymbol})</b>\n<b>Title:</b> ${event.title}\n<b>Date:</b> ${new Date(event.date_event).toLocaleDateString()}\n<b>Details:</b> ${event.source}\n\n`
     })
 
     bot.sendMessage(chatId, strEvent, {
-      parse_mode: 'markdown',
+      parse_mode: 'html',
       disable_web_page_preview: true
     }).then(() => console.log('Found events. Returning the 3 latest events.'))
   })
@@ -60,7 +61,7 @@ bot.onText(/\/event (.+)/, async (message, match) => {
     let reply
 
     if (event) {
-      reply = `Here is an upcoming event for <b>${coinList[coinIndex]}</b>:\n\n<b>Title:</b> ${event.title}\n<b>Date:</b> ${new Date(event.date_event).toLocaleDateString()}\n<b>Description:</b> ${event.description}\n<b>Source:</b> ${event.source}`
+      reply = `Here is an upcoming event for <b>${coinList[coinIndex]}</b>:\n\n<b>Title:</b> ${event.title}\n<b>Date:</b> ${new Date(event.date_event).toLocaleDateString()}\n<b>Description:</b> ${event.description}\n\n<b>Source:</b> ${event.source}`
     } else {
       reply = `There are no event(s) for <b>${coinList[coinIndex]}</b>.`
     }
