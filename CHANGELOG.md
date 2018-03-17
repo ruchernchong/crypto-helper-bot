@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## v1.0.1
 - Fixed coin prices not showing for certain coins
 - Fixed events crashing by dynamically setting the version to spoof the user-agent
 
