@@ -1,5 +1,8 @@
 # Changelog
 
+## Unreleased
+- Fixed an error where the bot cannot parse the body content properly
+
 ## v1.0.2
 - Added Bitcoin dominance to market cap command
 - Fixed command for retrieving total market cap
