@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## v1.0.2
 - Added Bitcoin dominance to market cap command
 - Fixed command for retrieving total market cap
 - Fixed bot not doing anything when a lowercase coin symbol is being entered
