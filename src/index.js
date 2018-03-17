@@ -1,7 +1,7 @@
-const {token} = require('./../keys')
+const { token } = require('./../keys')
 const axios = require('axios')
 const TelegramBot = require('node-telegram-bot-api')
-const bot = new TelegramBot(token, {polling: true})
+const bot = new TelegramBot(token, { polling: true })
 const config = require('./../package')
 
 axios.defaults.headers.common['user-agent'] = `Crypto Helper/${config.version}`
@@ -67,12 +67,12 @@ bot.onText(/\/event (.+)/, (message, match) => {
         reply = `There are no event(s) for ${coinList[index]}.`
       }
 
-      bot.sendMessage(chatId, reply, {parse_mode: 'markdown'}).then(() => console.log(`Event found for ${coin}.`))
+      bot.sendMessage(chatId, reply, { parse_mode: 'markdown' }).then(() => console.log(`Event found for ${coin}.`))
     })
   } else {
     const reply = `Unable to find *${coin}*. This coin might not exist (yet).`
 
-    bot.sendMessage(chatId, reply, {parse_mode: 'markdown'}).then(() => console.log(`Unable to find ${coin}.`))
+    bot.sendMessage(chatId, reply, { parse_mode: 'markdown' }).then(() => console.log(`Unable to find ${coin}.`))
   }
 })
 
@@ -84,7 +84,7 @@ bot.onText(/\/mcap/, message => {
 
     const reply = `Total Market Cap: _$${data.totalCap.toLocaleString('en')}_`
 
-    bot.sendMessage(chatId, reply, {parse_mode: 'markdown'}).then(() => console.log('Total Market Cap'))
+    bot.sendMessage(chatId, reply, { parse_mode: 'markdown' }).then(() => console.log('Total Market Cap'))
   })
 })
 
