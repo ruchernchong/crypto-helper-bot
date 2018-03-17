@@ -44,32 +44,30 @@ bot.onText(/\/events/, message => {
   })
 })
 
-bot.onText(/\/event (.+)/, (message, match) => {
+bot.onText(/\/event (.+)/, async (message, match) => {
   const chatId = message.chat.id
   const inputSymbol = match[1].toUpperCase()
 
-  const index = coinList.findIndex(list => list.includes(inputSymbol))
+  const coinIndex = coinList.findIndex(list => list.includes(inputSymbol))
 
-  if (index > -1) {
-    axios.get(`${CAL_BASE_URL}/api/events`, {
-      params: {
-        coins: coinList[index]
-      }
-    }).then(response => {
-      const event = response.data[0]
+  if (coinIndex > -1) {
+    let event
 
-      let reply
-
-      if (response.data.length > 0) {
-        reply = `Here is an upcoming event for <b>${coinList[index]}</b>:\n\n<b>Title:</b> ${event.title}\n<b>Date:</b> ${new Date(event.date_event).toLocaleDateString()}\n<b>Description:</b> ${event.description}\n<b>Source:</b> ${event.source}`
-      } else {
-        reply = `There are no event(s) for <b>${coinList[index]}</b>.`
-      }
-
-      bot.sendMessage(chatId, reply, { parse_mode: 'html' }).then(() => console.log(`Event found for ${inputSymbol}.`))
+    await axios.get(`${CAL_BASE_URL}/api/events`, { params: { coins: coinList[coinIndex] } }).then(response => {
+      event = response.data[0]
     })
+
+    let reply
+
+    if (event) {
+      reply = `Here is an upcoming event for <b>${coinList[coinIndex]}</b>:\n\n<b>Title:</b> ${event.title}\n<b>Date:</b> ${new Date(event.date_event).toLocaleDateString()}\n<b>Description:</b> ${event.description}\n<b>Source:</b> ${event.source}`
+    } else {
+      reply = `There are no event(s) for <b>${coinList[coinIndex]}</b>.`
+    }
+
+    bot.sendMessage(chatId, reply, { parse_mode: 'html' }).then(() => console.log(`Event found for ${inputSymbol}.`))
   } else {
-    const reply = `Unable to find *${inputSymbol}*. This coin might not even exist (yet).`
+    const reply = `Unable to find *${inputSymbol}*.`
 
     bot.sendMessage(chatId, reply, { parse_mode: 'markdown' }).then(() => console.log(`Unable to find ${inputSymbol}.`))
   }
