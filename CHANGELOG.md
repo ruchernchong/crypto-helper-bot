@@ -3,6 +3,7 @@
 ## Unreleased
 - Added Bitcoin dominance to market cap command
 - Fixed command for retrieving total market cap
+- Fixed bot not doing anything when a lowercase coin symbol is being entered
 
 ## v1.0.1
 - Fixed coin prices not showing for certain coins
@@ -13,6 +14,6 @@ Initial release of the Crypto Helper Telegram bot
 
 ### Features:
 - List 3 most recent events
-- Get events for a particular coin
-- Get price of a particular coin in USD, BTC and ETH
-- Get current total market capitalisation for cryptocurrencies
+- List events for a particular coin
+- List the price of a particular coin in USD, BTC and ETH
+- List the current total market capitalisation for cryptocurrencies
