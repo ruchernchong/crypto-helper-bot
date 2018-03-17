@@ -46,15 +46,14 @@ bot.onText(/\/events/, message => {
 
 bot.onText(/\/event (.+)/, (message, match) => {
   const chatId = message.chat.id
-  const coin = match[1]
+  const inputSymbol = match[1].toUpperCase()
 
-  const index = coinList.findIndex(list => list.includes(coin))
+  const index = coinList.findIndex(list => list.includes(inputSymbol))
 
   if (index > -1) {
     axios.get(`${CAL_BASE_URL}/api/events`, {
       params: {
-        coins: coinList[index],
-        max: 1
+        coins: coinList[index]
       }
     }).then(response => {
       const event = response.data[0]
@@ -62,17 +61,17 @@ bot.onText(/\/event (.+)/, (message, match) => {
       let reply
 
       if (response.data.length > 0) {
-        reply = `Here is an upcoming event for ${coinList[index]}:\n\nThis event has been voted: ${event.positive_vote_count}/${event.vote_count} (${event.percentage}%)\n\nTitle: ${event.title}\nDate: ${new Date(event.date_event).toLocaleDateString()}\nDescription: ${event.description}\nSource: ${event.source}\n${CAL_BASE_URL}`
+        reply = `Here is an upcoming event for <b>${coinList[index]}</b>:\n\n<b>Title:</b> ${event.title}\n<b>Date:</b> ${new Date(event.date_event).toLocaleDateString()}\n<b>Description:</b> ${event.description}\n<b>Source:</b> ${event.source}`
       } else {
-        reply = `There are no event(s) for ${coinList[index]}.`
+        reply = `There are no event(s) for <b>${coinList[index]}</b>.`
       }
 
-      bot.sendMessage(chatId, reply, { parse_mode: 'markdown' }).then(() => console.log(`Event found for ${coin}.`))
+      bot.sendMessage(chatId, reply, { parse_mode: 'html' }).then(() => console.log(`Event found for ${inputSymbol}.`))
     })
   } else {
-    const reply = `Unable to find *${coin}*. This coin might not exist (yet).`
+    const reply = `Unable to find *${inputSymbol}*. This coin might not even exist (yet).`
 
-    bot.sendMessage(chatId, reply, { parse_mode: 'markdown' }).then(() => console.log(`Unable to find ${coin}.`))
+    bot.sendMessage(chatId, reply, { parse_mode: 'markdown' }).then(() => console.log(`Unable to find ${inputSymbol}.`))
   }
 })
 
