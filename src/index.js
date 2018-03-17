@@ -7,7 +7,7 @@ const config = require('./../package')
 axios.defaults.headers.common['user-agent'] = `Crypto Helper/${config.version}`
 
 const CAL_BASE_URL = 'https://coinmarketcal.com'
-const COIN_BASE_URL = 'https://coincap.io'
+const PRICE_BASE_URL = 'https://api.coinmarketcap.com'
 
 let coinList
 
@@ -79,7 +79,7 @@ bot.onText(/\/event (.+)/, (message, match) => {
 bot.onText(/\/mcap/, message => {
   const chatId = message.chat.id
 
-  axios.get(`${COIN_BASE_URL}/global`).then(response => {
+  axios.get(`${PRICE_BASE_URL}/global`).then(response => {
     const data = response.data
 
     const reply = `Total Market Cap: _$${data.totalCap.toLocaleString('en')}_`
@@ -88,22 +88,25 @@ bot.onText(/\/mcap/, message => {
   })
 })
 
-bot.onText(/\/coin (.+)/, (message, match) => {
+bot.onText(/\/price (.+)/, async (message, match) => {
   const chatId = message.chat.id
   const coin = match[1]
 
-  axios.get(`${COIN_BASE_URL}/page/${coin}`).then(response => {
-    const data = response.data
+  let coinList
 
-    const rank = `*Rank:* _${data.rank}_`
-    const mCap = `*Est. Market Cap (USD):* _$${data.market_cap.toLocaleString('en')}_`
-    const priceUSD = `*USD:* _$${data.price_usd}_`
-    const priceBTC = `*BTC:* _${data.price_btc} BTC_`
-    const priceETH = `*ETH:* _${data.price_eth} ETH_`
-    const priceDelta = `*24hr Change:* _${data.cap24hrChange}%_`
-
-    const reply = `Price of *${coin}*:\n\n${rank}\n${mCap}\n${priceUSD}\n${priceBTC}\n${priceETH}\n${priceDelta}`
-
-    bot.sendMessage(chatId, reply, {parse_mode: 'markdown'}).then(() => console.log(`Found price for ${coin}`))
+  await axios.get(`${PRICE_BASE_URL}/v1/ticker/?limit=0`).then(response => {
+    coinList = response.data
   })
+
+  const coinDetail = coinList.filter(item => item.symbol === coin)[0]
+
+  const rank = `*Rank:* _${coinDetail.rank}_`
+  const mCap = `*Est. Market Cap (USD):* _$${parseFloat(coinDetail.market_cap_usd).toLocaleString('en')}_`
+  const priceUSD = `*USD:* _$${parseFloat(coinDetail.price_usd)}_`
+  const priceBTC = `*BTC:* _${parseFloat(coinDetail.price_btc).toFixed(8)} BTC_`
+  const priceDelta = `*24hr Change:* _${parseFloat(coinDetail.percent_change_24h)}%_`
+
+  const reply = `Price for *${coinDetail.name} (${coinDetail.symbol})*:\n\n${rank}\n${mCap}\n${priceUSD}\n${priceBTC}\n${priceDelta}`
+
+  bot.sendMessage(chatId, reply, { parse_mode: 'markdown' }).then(() => console.log(`Found price for ${coin}`))
 })
