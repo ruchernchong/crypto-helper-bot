@@ -8,11 +8,11 @@ You will need to have a valid Telegram account in order to use this bot.
 You can add the bot in Telegram [@CoinEventBot](https://t.me/CoinEventBot) (This username is subjected to change)
 
 ```
-/events - Display 3 of the latest events'
-/event <symbol> - Display event(s) for the particular coin'
-/price <coin> - Display the price for the particular coin'
-/mcap - Display the total market capitalisation and Bitcoin dominance'
-/about - More information about this bot'
+/events - Display 3 of the latest events
+/event <symbol> - Display event(s) for the particular coin
+/price <coin> - Display the price for the particular coin
+/mcap - Display the total market capitalisation and Bitcoin dominance
+/about - More information about this bot
 ```
 
 ## License
