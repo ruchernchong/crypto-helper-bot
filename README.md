@@ -2,7 +2,7 @@
 A Telegram bot to provide prices and news on cryptocurriences.
 
 ## Prerequisites
-You will need to have a valid Telegram account in order to use this bot.
+You will need to have a valid [Telegram](https://telegram.org) account in order to use this bot.
 
 ## Usage
 You can add the bot in Telegram [@CoinEventBot](https://t.me/CoinEventBot) (This username is subjected to change)
