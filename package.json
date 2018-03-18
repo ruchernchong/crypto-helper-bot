@@ -1,5 +1,5 @@
 {
-  "name": "crypto-helper",
+  "name": "crypto-helper-bot",
   "version": "1.0.4",
   "description": "A Telegram bot designed as a helper for Cryptocurrency.",
   "main": "src/index.js",
