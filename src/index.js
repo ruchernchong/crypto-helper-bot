@@ -35,8 +35,6 @@ bot.onText(/\/start|\/help/, (message, match) => {
   reply += '*Prices*\n'
   reply += '/price <coin> - Display the price for the particular coin\n'
   reply += '/mcap - Display the total market capitalisation and Bitcoin dominance\n\n'
-  reply += '*Others*\n'
-  reply += '/about - More information about this bot\n\n'
   reply += 'As always, you are welcome to use the /help command to bring this page up again at anytime within the bot\'s chat.\n\n'
 
   bot.sendMessage(chatId, reply, { parse_mode: 'markdown' })
