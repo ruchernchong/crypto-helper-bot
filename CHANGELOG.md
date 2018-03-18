@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.0.4
+- Added `/help` command helper
+- Added `/start` command helper
+
 ## v1.0.3
 - Fixed an error where the bot crashed while querying the event of a coin
 
