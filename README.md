@@ -16,7 +16,7 @@ You can add the bot in Telegram [@CoinEventBot](https://t.me/CoinEventBot) (This
 ```
 
 ## License
-This project is licensed under the MIT License - see the LICENSE file for details
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
 
 ## Donate
 Donations are welcome. They are always accepted but never expected. The following are some cryptocurrencies I gladly accept.
