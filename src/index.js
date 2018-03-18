@@ -16,6 +16,32 @@ axios.get(`${CAL_BASE_URL}/api/coins`).then(response => {
   console.log('Data has been assigned to global variable')
 }).catch(error => console.log(error))
 
+bot.onText(/\/start|\/help/, (message, match) => {
+  const chatId = message.chat.id
+  const command = match[0]
+
+  let reply = ''
+
+  if (command === '/help') {
+    reply += `Hello ${message.from.first_name}, I see you are having some trouble with me. Do not worry, I am here to help!\n\n`
+  } else {
+    reply += `Hello ${message.from.first_name} and thank you for using me! This will get you started.\n\n`
+  }
+
+  reply += 'You can control me with the follow commands:\n\n'
+  reply += '*Events*\n'
+  reply += '/events - Display 3 of the latest events\n'
+  reply += '/event <symbol> - Display event(s) for the particular coin\n\n'
+  reply += '*Prices*\n'
+  reply += '/price <coin> - Display the price for the particular coin\n'
+  reply += '/mcap - Display the total market capitalisation and Bitcoin dominance\n\n'
+  reply += '*Others*\n'
+  reply += '/about - More information about this bot\n\n'
+  reply += 'As always, you are welcome to use the /help command to bring this page up again at anytime within the bot\'s chat.\n\n'
+
+  bot.sendMessage(chatId, reply, { parse_mode: 'markdown' })
+})
+
 bot.onText(/\/events/, message => {
   const chatId = message.chat.id
 
