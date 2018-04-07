@@ -31,32 +31,24 @@ bot.onText(/\/price (.+)/, async (message, match) => {
 
   let reply, name, symbol, rank, mCap, priceUSD, priceBTC, priceDelta, link
 
-  if (isBitcoin(inputSymbol)) {
-    const bitcoin = coinList.find(item => item.symbol === 'BTC')
+  const coinDetail = coinList.find(item => item.symbol === inputSymbol.toUpperCase())
 
-    name = bitcoin.name
-    symbol = bitcoin.symbol
-    rank = `*Rank:* _${bitcoin.rank}_`
-    mCap = `*Est. Market Cap (USD):* _$${parseFloat(bitcoin.market_cap_usd).toLocaleString('en')}_`
-    priceUSD = `*USD:* _$${parseFloat(bitcoin.price_usd)}_`
-    priceDelta = `*24hr Change:* _${parseFloat(bitcoin.percent_change_24h)}%_`
-    link = `*Link:* ${SITE_BASE_URL}/currencies/${bitcoin.name.toLowerCase().replace(/\s+/, '-')}`
-  } else {
-    const coinDetail = coinList.filter(item => item.symbol === inputSymbol.toUpperCase())[0]
-
+  if (coinDetail) {
     name = coinDetail.name
     symbol = coinDetail.symbol
     rank = `*Rank:* _${coinDetail.rank}_`
     mCap = `*Est. Market Cap (USD):* _$${parseFloat(coinDetail.market_cap_usd).toLocaleString('en')}_`
-    priceUSD = `*USD:* _$${parseFloat(coinDetail.price_usd)}_`
+    priceUSD = `*USD:* _$${parseFloat(coinDetail.price_usd).toLocaleString('en')}_`
     priceBTC = `*BTC:* _${parseFloat(coinDetail.price_btc).toFixed(8)} BTC_`
     priceDelta = `*24hr Change:* _${parseFloat(coinDetail.percent_change_24h)}%_`
     link = `*Link:* ${SITE_BASE_URL}/currencies/${coinDetail.name.toLowerCase().replace(/\s+/, '-')}`
+
+    reply = `Price for *${name} (${symbol})*:\n\n${rank}\n${mCap}\n${priceUSD}\n${isBitcoin(inputSymbol) ? '' : `${priceBTC}\n`}${priceDelta}\n${link}`
+  } else {
+    reply = `Unable to find *${inputSymbol}*`
   }
 
-  reply = `Price for *${name} (${symbol})*:\n\n${rank}\n${mCap}\n${priceUSD}\n${isBitcoin(inputSymbol) ? '' : `${priceBTC}\n`}${priceDelta}\n${link}`
-
-  bot.sendMessage(chatId, reply, { parse_mode: 'markdown' }).then(() => console.log(`Found price for ${inputSymbol}`))
+  bot.sendMessage(chatId, reply, { parse_mode: 'markdown' })
 })
 
 const isBitcoin = (symbol) => {

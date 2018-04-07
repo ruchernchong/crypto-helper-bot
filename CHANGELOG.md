@@ -1,6 +1,7 @@
 # Changelog
 
 ## Unreleased
+- Added reply for coins that are not found
 - Removed user-agent spoof since upstream API have changed and is now working without it
 - Removed BTC pairing for the price of Bitcoin (BTC) since it will always be 1.0 
 - Added link to the page of the respective coin for the price related commands
