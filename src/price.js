@@ -29,16 +29,36 @@ bot.onText(/\/price (.+)/, async (message, match) => {
     coinList = response.data
   })
 
-  const coinDetail = coinList.filter(item => item.symbol === inputSymbol.toUpperCase())[0]
+  let reply, name, symbol, rank, mCap, priceUSD, priceBTC, priceDelta, link
 
-  const rank = `*Rank:* _${coinDetail.rank}_`
-  const mCap = `*Est. Market Cap (USD):* _$${parseFloat(coinDetail.market_cap_usd).toLocaleString('en')}_`
-  const priceUSD = `*USD:* _$${parseFloat(coinDetail.price_usd)}_`
-  const priceBTC = `*BTC:* _${parseFloat(coinDetail.price_btc).toFixed(8)} BTC_`
-  const priceDelta = `*24hr Change:* _${parseFloat(coinDetail.percent_change_24h)}%_`
-  const link = `*Link:* ${SITE_BASE_URL}/currencies/${coinDetail.name.toLowerCase().replace(/\s+/, '-')}`
+  if (isBitcoin(inputSymbol)) {
+    const bitcoin = coinList.find(item => item.symbol === 'BTC')
 
-  const reply = `Price for *${coinDetail.name} (${coinDetail.symbol})*:\n\n${rank}\n${mCap}\n${priceUSD}\n${priceBTC}\n${priceDelta}\n${link}`
+    name = bitcoin.name
+    symbol = bitcoin.symbol
+    rank = `*Rank:* _${bitcoin.rank}_`
+    mCap = `*Est. Market Cap (USD):* _$${parseFloat(bitcoin.market_cap_usd).toLocaleString('en')}_`
+    priceUSD = `*USD:* _$${parseFloat(bitcoin.price_usd)}_`
+    priceDelta = `*24hr Change:* _${parseFloat(bitcoin.percent_change_24h)}%_`
+    link = `*Link:* ${SITE_BASE_URL}/currencies/${bitcoin.name.toLowerCase().replace(/\s+/, '-')}`
+  } else {
+    const coinDetail = coinList.filter(item => item.symbol === inputSymbol.toUpperCase())[0]
+
+    name = coinDetail.name
+    symbol = coinDetail.symbol
+    rank = `*Rank:* _${coinDetail.rank}_`
+    mCap = `*Est. Market Cap (USD):* _$${parseFloat(coinDetail.market_cap_usd).toLocaleString('en')}_`
+    priceUSD = `*USD:* _$${parseFloat(coinDetail.price_usd)}_`
+    priceBTC = `*BTC:* _${parseFloat(coinDetail.price_btc).toFixed(8)} BTC_`
+    priceDelta = `*24hr Change:* _${parseFloat(coinDetail.percent_change_24h)}%_`
+    link = `*Link:* ${SITE_BASE_URL}/currencies/${coinDetail.name.toLowerCase().replace(/\s+/, '-')}`
+  }
+
+  reply = `Price for *${name} (${symbol})*:\n\n${rank}\n${mCap}\n${priceUSD}\n${isBitcoin(inputSymbol) ? '' : `${priceBTC}\n`}${priceDelta}\n${link}`
 
   bot.sendMessage(chatId, reply, { parse_mode: 'markdown' }).then(() => console.log(`Found price for ${inputSymbol}`))
 })
+
+const isBitcoin = (symbol) => {
+  return symbol.includes('BTC')
+}

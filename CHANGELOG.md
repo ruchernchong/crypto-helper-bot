@@ -1,6 +1,7 @@
 # Changelog
 
 ## Unreleased
+- Removed BTC pairing for the price of Bitcoin (BTC) since it will always be 1.0 
 - Added link to the page of the respective coin for the price related commands
 
 ## v1.1.0
