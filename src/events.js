@@ -1,7 +1,6 @@
 const keys = require('./../keys.js')
 const { bot } = require('./config')
 const axios = require('axios')
-const config = require('./../package.json')
 
 const CAL_BASE_URL = 'https://api.coinmarketcal.com'
 
@@ -21,8 +20,6 @@ auth().then(response => {
   accessToken = response.data.access_token
   getCoinList()
 })
-
-axios.defaults.headers.common['user-agent'] = `Crypto Helper/${config.version}`
 
 const getCoinList = () => {
   axios.get(`${CAL_BASE_URL}/v1/coins`, {
