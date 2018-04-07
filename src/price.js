@@ -1,6 +1,7 @@
 const axios = require('axios')
 const { bot } = require('./config.js')
 
+const SITE_BASE_URL = 'https://coinmarketcap.com'
 const PRICE_BASE_URL = 'https://api.coinmarketcap.com'
 
 bot.onText(/\/mcap/, async message => {
@@ -35,9 +36,9 @@ bot.onText(/\/price (.+)/, async (message, match) => {
   const priceUSD = `*USD:* _$${parseFloat(coinDetail.price_usd)}_`
   const priceBTC = `*BTC:* _${parseFloat(coinDetail.price_btc).toFixed(8)} BTC_`
   const priceDelta = `*24hr Change:* _${parseFloat(coinDetail.percent_change_24h)}%_`
+  const link = `*Link:* ${SITE_BASE_URL}/currencies/${coinDetail.name.toLowerCase().replace(/\s+/, '-')}`
 
-  const reply = `Price for *${coinDetail.name} (${coinDetail.symbol})*:\n\n${rank}\n${mCap}\n${priceUSD}\n${priceBTC}\n${priceDelta}`
+  const reply = `Price for *${coinDetail.name} (${coinDetail.symbol})*:\n\n${rank}\n${mCap}\n${priceUSD}\n${priceBTC}\n${priceDelta}\n${link}`
 
   bot.sendMessage(chatId, reply, { parse_mode: 'markdown' }).then(() => console.log(`Found price for ${inputSymbol}`))
 })
-

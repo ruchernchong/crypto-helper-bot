@@ -1,5 +1,8 @@
 # Changelog
 
+## Unreleased
+- Added link to the page of the respective coin for the price related commands
+
 ## v1.1.0
 - Fixed events not working because of upstream API changes
 
