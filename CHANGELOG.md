@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## v1.1.0
 - Fixed events not working because of upstream API changes
 
 ## v1.0.4
