@@ -69,18 +69,16 @@ bot.onText(/\/event (.+)/, async (message, match) => {
   const coin = coinList.find(list => list.symbol.includes(inputSymbol))
 
   if (coin) {
-    let event
+    let event, reply
 
     await axios.get(`${CAL_BASE_URL}/v1/events`, {
       params: {
         access_token: accessToken,
-        coins: coinList[coin]
+        coins: coin.id
       }
     }).then(response => {
       event = response.data[0]
     }).catch(error => console.log(error))
-
-    let reply
 
     if (event) {
       reply = `Here is an upcoming event for <b>${coin.name} (${coin.symbol})</b>:\n\n<b>Title:</b> ${event.title}\n<b>Date:</b> ${new Date(event.date_event).toLocaleDateString()}\n<b>Description:</b> ${event.description}\n\n<b>Source:</b> ${event.source}`
