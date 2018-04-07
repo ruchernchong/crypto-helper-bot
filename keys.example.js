@@ -1,3 +1,9 @@
 module.exports = {
-  token: 'TELEGRAM_BOT_TOKEN'
+  TELEGRAM: {
+    TOKEN: 'TELEGRAM_BOT_TOKEN'
+  },
+  COINMARKETCAL: {
+    CLIENT_ID: 'CLIENT_ID',
+    CLIENT_SECRET: 'CLIENT_SECRET'
+  }
 }
