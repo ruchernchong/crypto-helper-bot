@@ -1,5 +1,8 @@
 # Changelog
 
+## Unreleased
+- Fixed events not working because of upstream API changes
+
 ## v1.0.4
 - Added `/help` command helper
 - Added `/start` command helper
