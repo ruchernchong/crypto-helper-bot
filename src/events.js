@@ -28,7 +28,7 @@ const getCoinList = () => {
     }
   }).then(response => {
     coinList = response.data
-    console.log('Data has been assigned to global variable')
+    console.log('Coinmarketcal data has been assigned to the global variable.')
   }).catch(error => console.log(error))
 }
 
@@ -46,7 +46,7 @@ bot.onText(/\/events/, message => {
   }).then(response => {
     const events = response.data
 
-    strEvent = `Here are the latest ${maxEvents} events:\n\n`
+    strEvent = `Here are the latest _${maxEvents}_ events:\n\n`
 
     events.forEach(event => {
       const coinName = event.coins[0].name
