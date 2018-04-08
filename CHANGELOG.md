@@ -10,8 +10,7 @@
 - Fixed events not working because of upstream API changes
 
 ## v1.0.4
-- Added `/help` command helper
-- Added `/start` command helper
+- Added `/start` and `/help` command helper
 
 ## v1.0.3
 - Fixed an error where the bot crashed while querying the event of a coin
@@ -32,4 +31,4 @@ Initial release of the Crypto Helper Telegram bot
 - List 3 most recent events
 - List events for a particular coin
 - List the price of a particular coin in USD, BTC and ETH
-- List the current total market capitalisation for cryptocurrencies
+- List the current total market capitalisation for crypto currencies
