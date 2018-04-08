@@ -58,7 +58,7 @@ bot.onText(/\/events/, message => {
     bot.sendMessage(chatId, strEvent, {
       parse_mode: 'html',
       disable_web_page_preview: true
-    }).then(() => console.log('Found events. Returning the 3 latest events.'))
+    }).then(() => console.log(`Found events. Returning the ${maxEvents} latest events.`))
   }).catch(error => console.log(error))
 })
 
@@ -86,10 +86,10 @@ bot.onText(/\/event (.+)/, async (message, match) => {
       reply = `There are no event(s) for <b>${coinList[coin]}</b>.`
     }
 
-    bot.sendMessage(chatId, reply, { parse_mode: 'html' }).then(() => console.log(`Event found for ${inputSymbol}.`))
+    bot.sendMessage(chatId, reply, { parse_mode: 'html' }).then(() => console.log(`Event found for ${inputSymbol}.`)).catch(error => console.log(error))
   } else {
     const reply = `Unable to find *${inputSymbol}*.`
 
-    bot.sendMessage(chatId, reply, { parse_mode: 'markdown' }).then(() => console.log(`Unable to find ${inputSymbol}.`))
+    bot.sendMessage(chatId, reply, { parse_mode: 'markdown' }).then(() => console.log(`Unable to find ${inputSymbol}.`)).catch(error => console.log(error))
   }
 })

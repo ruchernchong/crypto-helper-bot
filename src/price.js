@@ -15,7 +15,7 @@ bot.onText(/\/mcap/, async message => {
 
     const reply = `*Total Market Cap:* ${marketCap}\n*Bitcoin Dominance:* ${bitcoinDominance}`
 
-    bot.sendMessage(chatId, reply, { parse_mode: 'markdown' }).then(() => console.log('Total Market Cap in USD'))
+    bot.sendMessage(chatId, reply, { parse_mode: 'markdown' }).then(() => console.log('Total Market Cap in USD')).catch(error => console.log(error))
   })
 })
 
@@ -27,7 +27,7 @@ bot.onText(/\/price (.+)/, async (message, match) => {
 
   await axios.get(`${API_BASE_URL}/v1/ticker/?limit=0`).then(response => {
     coinList = response.data
-  })
+  }).catch(error => console.log(error))
 
   let reply, name, symbol, rank, mCap, priceUSD, priceBTC, priceDelta, link
 
@@ -48,7 +48,7 @@ bot.onText(/\/price (.+)/, async (message, match) => {
     reply = `Unable to find *${inputSymbol}*`
   }
 
-  bot.sendMessage(chatId, reply, { parse_mode: 'markdown' })
+  bot.sendMessage(chatId, reply, { parse_mode: 'markdown' }).then(() => console.log(`Reply sent for ${inputSymbol}`)).catch(error => console.log(error))
 })
 
 const isBitcoin = (symbol) => {
