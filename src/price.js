@@ -11,9 +11,9 @@ bot.onText(/\/mcap/, async message => {
     const data = response.data
 
     const marketCap = `_$${parseFloat(data.total_market_cap_usd).toLocaleString('en')}_`
-    const bitcoinDominace = `_${parseFloat(data.bitcoin_percentage_of_market_cap).toFixed(2)}%_`
+    const bitcoinDominance = `_${parseFloat(data.bitcoin_percentage_of_market_cap).toFixed(2)}%_`
 
-    const reply = `*Total Market Cap:* ${marketCap}\n*Bitcoin Dominance:* ${bitcoinDominace}`
+    const reply = `*Total Market Cap:* ${marketCap}\n*Bitcoin Dominance:* ${bitcoinDominance}`
 
     bot.sendMessage(chatId, reply, { parse_mode: 'markdown' }).then(() => console.log('Total Market Cap in USD'))
   })
