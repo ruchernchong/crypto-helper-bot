@@ -2,12 +2,12 @@ const axios = require('axios')
 const { bot } = require('./config.js')
 
 const SITE_BASE_URL = 'https://coinmarketcap.com'
-const PRICE_BASE_URL = 'https://api.coinmarketcap.com'
+const API_BASE_URL = 'https://api.coinmarketcap.com'
 
 bot.onText(/\/mcap/, async message => {
   const chatId = message.chat.id
 
-  await axios.get(`${PRICE_BASE_URL}/v1/global`).then(response => {
+  await axios.get(`${API_BASE_URL}/v1/global`).then(response => {
     const data = response.data
 
     const marketCap = `_$${parseFloat(data.total_market_cap_usd).toLocaleString('en')}_`
@@ -25,7 +25,7 @@ bot.onText(/\/price (.+)/, async (message, match) => {
 
   let coinList
 
-  await axios.get(`${PRICE_BASE_URL}/v1/ticker/?limit=0`).then(response => {
+  await axios.get(`${API_BASE_URL}/v1/ticker/?limit=0`).then(response => {
     coinList = response.data
   })
 
