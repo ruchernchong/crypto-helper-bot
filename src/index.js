@@ -1,6 +1,6 @@
 const { bot } = require('./config.js')
-require('./events')
-require('./price')
+require('./events.js')
+require('./price.js')
 
 bot.onText(/\/start|\/help/, (message, match) => {
   const chatId = message.chat.id
