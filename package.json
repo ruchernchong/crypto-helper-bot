@@ -1,6 +1,6 @@
 {
   "name": "crypto-helper-bot",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A Telegram bot designed as a helper for Cryptocurrency.",
   "main": "src/index.js",
   "repository": "https://github.com/ruchern/crypto-helper.git",
