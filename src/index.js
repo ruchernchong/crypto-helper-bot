@@ -1,5 +1,5 @@
 const { bot } = require('./config.js')
-require('./events.js')
+require('./event.js')
 require('./price.js')
 
 bot.onText(/\/start|\/help/, (message, match) => {
