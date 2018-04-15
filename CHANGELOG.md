@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## v1.2.0
 - Added emoji to beautify some text
 - Added a quicker command to retrieve prices of coins
 - Added calculation for ETH pairing
