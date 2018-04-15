@@ -13,7 +13,7 @@ bot.onText(/\/mcap/, async message => {
     const marketCap = `_$${parseFloat(data.total_market_cap_usd).toLocaleString('en')}_`
     const bitcoinDominance = `_${parseFloat(data.bitcoin_percentage_of_market_cap).toFixed(2)}%_`
 
-    const reply = `*Total Market Cap:* ${marketCap}\n*Bitcoin Dominance:* ${bitcoinDominance}`
+    const reply = `*Total Est. Market Cap (USD):* ${marketCap}\n*Bitcoin Dominance:* ${bitcoinDominance}`
 
     bot.sendMessage(chatId, reply, { parse_mode: 'markdown' }).then(() => console.log('Total Market Cap in USD')).catch(error => console.log(error))
   })
@@ -33,7 +33,6 @@ bot.onText(/(\$[A-Za-z]{3,})/, async (message, match) => {
   let reply, name, symbol, rank, mCap, priceUSD, priceBTC, priceETH, priceDelta, link
 
   const coinDetail = coinList.find(item => item.symbol === inputSymbol.toUpperCase())
-
   const getEthereum = coinList.find(item => item.symbol === 'ETH')
 
   if (coinDetail) {
@@ -47,7 +46,7 @@ bot.onText(/(\$[A-Za-z]{3,})/, async (message, match) => {
     priceDelta = `*24hr Change:* _${parseFloat(coinDetail.percent_change_24h)}%_`
     link = `*Link:* ${SITE_BASE_URL}/currencies/${coinDetail.name.toLowerCase().replace(/\s+/, '-')}`
 
-    reply = `Price for *${name} (${symbol})*:\n\n${rank}\n${mCap}\n${priceUSD}\n${isBitcoin(inputSymbol) ? '' : `${priceBTC}`}\n${isEthereum(inputSymbol) ? '' : `${priceETH}`}\n${priceDelta}\n${link}`
+    reply = `Here is the current price for *${name} (${symbol})*:\n\n${rank}\n${mCap}\n${priceUSD}\n${isBitcoin(inputSymbol) ? '' : `${priceBTC}\n`}${isEthereum(inputSymbol) ? '' : `${priceETH}\n`}${priceDelta}\n\n${link}`
   } else {
     reply = `Unable to find *${inputSymbol}*`
   }
@@ -55,7 +54,7 @@ bot.onText(/(\$[A-Za-z]{3,})/, async (message, match) => {
   bot.sendMessage(chatId, reply, { parse_mode: 'markdown' }).then(() => console.log(`Reply sent for ${inputSymbol}`)).catch(error => console.log(error))
 })
 
-const isBitcoin = (symbol) => {
+const isBitcoin = symbol => {
   return symbol.includes('BTC')
 }
 
