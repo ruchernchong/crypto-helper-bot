@@ -2,7 +2,7 @@
 [![GitHub issues](https://img.shields.io/github/release/ruchern/crypto-helper.svg?style=for-the-badge)](https://github.com/ruchern/crypto-helper/issues)
 [![GitHub license](https://img.shields.io/github/license/ruchern/crypto-helper.svg?style=for-the-badge)](https://github.com/ruchern/crypto-helper/blob/master/LICENSE)
 
-A Telegram bot to provide prices and news on cryptocurriences.
+A Telegram bot to provide prices and news on cryptocurrencies.
 
 ## Prerequisites
 You will need to have a valid [Telegram](https://telegram.org) account in order to use this bot.
