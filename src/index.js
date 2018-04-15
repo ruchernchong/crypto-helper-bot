@@ -19,7 +19,7 @@ bot.onText(/\/start|\/help/, (message, match) => {
   reply += '/events - Display 3 of the latest events\n'
   reply += '/event <symbol> - Display event(s) for the particular coin\n\n'
   reply += '*Prices*\n'
-  reply += '/price <coin> - Display the price for the particular coin\n'
+  reply += '$<symbol> - Display the price for the particular coin\n'
   reply += '/mcap - Display the total market capitalisation and Bitcoin dominance\n\n'
   reply += 'As always, you are welcome to use the /help command to bring this page up again at anytime within the bot\'s chat.\n\n'
 
