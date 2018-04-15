@@ -46,7 +46,7 @@ bot.onText(/\/events/, message => {
   }).then(response => {
     const events = response.data
 
-    strEvent = `📅 Here are the latest _${maxEvents}_ events:\n\n`
+    strEvent = `📅 Here are the latest <i>${maxEvents}</i> events:\n\n`
 
     events.forEach(event => {
       const coinName = event.coins[0].name
