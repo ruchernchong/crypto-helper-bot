@@ -13,7 +13,7 @@ You can add the bot in Telegram [@CryptoHelperBot](https://t.me/CryptoHelperBot)
 ```
 /events - Display 3 of the latest events
 /event <symbol> - Display event(s) for the particular coin
-/price <coin> - Display the price for the particular coin
+$<symbol> - Display the price for the particular coin
 /mcap - Display the total market capitalisation and Bitcoin dominance
 /about - More information about this bot
 ```

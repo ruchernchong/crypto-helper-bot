@@ -19,9 +19,10 @@ bot.onText(/\/mcap/, async message => {
   })
 })
 
-bot.onText(/\/price (.+)/, async (message, match) => {
+bot.onText(/(\$[A-Za-z]{3,})/, async (message, match) => {
   const chatId = message.chat.id
-  const inputSymbol = match[1]
+  const { input } = match
+  const inputSymbol = input.replace('$', '')
 
   let coinList
 

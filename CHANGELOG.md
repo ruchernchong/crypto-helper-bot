@@ -1,6 +1,7 @@
 # Changelog
 
 ## Unreleased
+- Added a quicker command to retrieve prices of coins
 - Added calculation for ETH pairing
 
 ## v1.1.1
