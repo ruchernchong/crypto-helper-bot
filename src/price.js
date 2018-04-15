@@ -29,9 +29,11 @@ bot.onText(/\/price (.+)/, async (message, match) => {
     coinList = response.data
   }).catch(error => console.log(error))
 
-  let reply, name, symbol, rank, mCap, priceUSD, priceBTC, priceDelta, link
+  let reply, name, symbol, rank, mCap, priceUSD, priceBTC, priceETH, priceDelta, link
 
   const coinDetail = coinList.find(item => item.symbol === inputSymbol.toUpperCase())
+
+  const getEthereum = coinList.find(item => item.symbol === 'ETH')
 
   if (coinDetail) {
     name = coinDetail.name
@@ -40,10 +42,11 @@ bot.onText(/\/price (.+)/, async (message, match) => {
     mCap = `*Est. Market Cap (USD):* _$${parseFloat(coinDetail.market_cap_usd).toLocaleString('en')}_`
     priceUSD = `*USD:* _$${parseFloat(coinDetail.price_usd).toLocaleString('en')}_`
     priceBTC = `*BTC:* _${parseFloat(coinDetail.price_btc).toFixed(8)} BTC_`
+    priceETH = `*ETH:* _${parseFloat(coinDetail.price_btc / getEthereum.price_btc).toFixed(8)} ETH_`
     priceDelta = `*24hr Change:* _${parseFloat(coinDetail.percent_change_24h)}%_`
     link = `*Link:* ${SITE_BASE_URL}/currencies/${coinDetail.name.toLowerCase().replace(/\s+/, '-')}`
 
-    reply = `Price for *${name} (${symbol})*:\n\n${rank}\n${mCap}\n${priceUSD}\n${isBitcoin(inputSymbol) ? '' : `${priceBTC}\n`}${priceDelta}\n${link}`
+    reply = `Price for *${name} (${symbol})*:\n\n${rank}\n${mCap}\n${priceUSD}\n${isBitcoin(inputSymbol) ? '' : `${priceBTC}`}\n${isEthereum(inputSymbol) ? '' : `${priceETH}`}\n${priceDelta}\n${link}`
   } else {
     reply = `Unable to find *${inputSymbol}*`
   }
@@ -53,4 +56,8 @@ bot.onText(/\/price (.+)/, async (message, match) => {
 
 const isBitcoin = (symbol) => {
   return symbol.includes('BTC')
+}
+
+const isEthereum = symbol => {
+  return symbol.includes('ETH')
 }

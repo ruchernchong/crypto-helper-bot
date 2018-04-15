@@ -1,5 +1,8 @@
 # Changelog
 
+## Unreleased
+- Added calculation for ETH pairing
+
 ## v1.1.1
 - Added reply for coins that are not found
 - Removed user-agent spoof since upstream API have changed and is now working without it
