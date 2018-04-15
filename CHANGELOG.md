@@ -1,5 +1,8 @@
 # Changelog
 
+## Unreleased
+- Added missing emoji to the latest events
+
 ## v1.2.0
 - Added emoji to beautify some text
 - Added a quicker command to retrieve prices of coins
