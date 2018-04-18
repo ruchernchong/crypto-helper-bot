@@ -7,16 +7,18 @@ const API_BASE_URL = 'https://api.coinmarketcap.com'
 bot.onText(/\/mcap/, async message => {
   const chatId = message.chat.id
 
-  await axios.get(`${API_BASE_URL}/v1/global`).then(response => {
-    const data = response.data
+  let data
 
-    const marketCap = `_$${parseFloat(data.total_market_cap_usd).toLocaleString('en')}_`
-    const bitcoinDominance = `_${parseFloat(data.bitcoin_percentage_of_market_cap).toFixed(2)}%_`
-
-    const reply = `*Total Est. Market Cap (USD):* ${marketCap}\n*Bitcoin Dominance:* ${bitcoinDominance}`
-
-    bot.sendMessage(chatId, reply, { parse_mode: 'markdown' }).then(() => console.log('Total Market Cap in USD')).catch(error => console.log(error))
+  data = await axios.get(`${API_BASE_URL}/v1/global`).then(response => {
+    return response.data
   })
+
+  const marketCap = `_$${parseFloat(data.total_market_cap_usd).toLocaleString('en')}_`
+  const bitcoinDominance = `_${parseFloat(data.bitcoin_percentage_of_market_cap).toFixed(2)}%_`
+
+  const reply = `*Total Est. Market Cap (USD):* ${marketCap}\n*Bitcoin Dominance:* ${bitcoinDominance}`
+
+  bot.sendMessage(chatId, reply, { parse_mode: 'markdown' }).then(() => console.log('Total Market Cap in USD')).catch(error => console.log(error))
 })
 
 bot.onText(/(\$[A-Za-z]{3,})/, async (message, match) => {
@@ -26,8 +28,8 @@ bot.onText(/(\$[A-Za-z]{3,})/, async (message, match) => {
 
   let coinList
 
-  await axios.get(`${API_BASE_URL}/v1/ticker/?limit=0`).then(response => {
-    coinList = response.data
+  coinList = await axios.get(`${API_BASE_URL}/v1/ticker/?limit=0`).then(response => {
+    return response.data
   }).catch(error => console.log(error))
 
   let reply, name, symbol, rank, mCap, priceUSD, priceBTC, priceETH, priceDelta, link

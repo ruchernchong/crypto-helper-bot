@@ -16,50 +16,53 @@ const auth = () => {
   })
 }
 
-auth().then(response => {
+auth().then(async response => {
   accessToken = response.data.access_token
-  getCoinList()
+  await getCoinList()
 })
 
-const getCoinList = () => {
-  axios.get(`${CAL_BASE_URL}/v1/coins`, {
+const getCoinList = async () => {
+  coinList = await axios.get(`${CAL_BASE_URL}/v1/coins`, {
     params: {
       access_token: accessToken
     }
   }).then(response => {
-    coinList = response.data
-    console.log('Coinmarketcal data has been assigned to the global variable.')
+    return response.data
   }).catch(error => console.log(error))
+
+  console.log('Coinmarketcal data has been assigned to the global variable.')
 }
 
-bot.onText(/\/events/, message => {
+bot.onText(/\/events/, async message => {
   const chatId = message.chat.id
 
   let strEvent
   const maxEvents = 3
 
-  axios.get(`${CAL_BASE_URL}/v1/events`, {
+  let events
+
+  events = await axios.get(`${CAL_BASE_URL}/v1/events`, {
     params: {
       access_token: accessToken,
       max: maxEvents
     }
   }).then(response => {
-    const events = response.data
-
-    strEvent = `📅 Here are the latest <i>${maxEvents}</i> events:\n\n`
-
-    events.forEach(event => {
-      const coinName = event.coins[0].name
-      const coinSymbol = event.coins[0].symbol
-
-      strEvent += `<b>${coinName} (${coinSymbol})</b>\n<b>Title:</b> ${event.title}\n<b>Date:</b> ${new Date(event.date_event).toLocaleDateString()}\n<b>Details:</b> ${event.source}\n\n`
-    })
-
-    bot.sendMessage(chatId, strEvent, {
-      parse_mode: 'html',
-      disable_web_page_preview: true
-    }).then(() => console.log(`Found events. Returning the ${maxEvents} latest events.`))
+    return response.data
   }).catch(error => console.log(error))
+
+  strEvent = `📅 Here are the latest <i>${maxEvents}</i> events:\n\n`
+
+  events.forEach(event => {
+    const coinName = event.coins[0].name
+    const coinSymbol = event.coins[0].symbol
+
+    strEvent += `<b>${coinName} (${coinSymbol})</b>\n<b>Title:</b> ${event.title}\n<b>Date:</b> ${new Date(event.date_event).toLocaleDateString()}\n<b>Details:</b> ${event.source}\n\n`
+  })
+
+  bot.sendMessage(chatId, strEvent, {
+    parse_mode: 'html',
+    disable_web_page_preview: true
+  }).then(() => console.log(`Found events. Returning the ${maxEvents} latest events.`))
 })
 
 bot.onText(/\/event (.+)/, async (message, match) => {
@@ -71,13 +74,13 @@ bot.onText(/\/event (.+)/, async (message, match) => {
   if (coin) {
     let event, reply
 
-    await axios.get(`${CAL_BASE_URL}/v1/events`, {
+    event = await axios.get(`${CAL_BASE_URL}/v1/events`, {
       params: {
         access_token: accessToken,
         coins: coin.id
       }
     }).then(response => {
-      event = response.data[0]
+      return response.data[0]
     }).catch(error => console.log(error))
 
     if (event) {
