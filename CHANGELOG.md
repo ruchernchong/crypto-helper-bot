@@ -1,6 +1,7 @@
 # Changelog
 
 ## Unreleased
+- Cleaned up `async/await` code blocks
 - Added missing emoji to the latest events
 
 ## v1.2.0
