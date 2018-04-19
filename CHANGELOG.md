@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## v1.2.2
 - Fixed wrong regex expression for string replacement
 
 ## v1.2.1
