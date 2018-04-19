@@ -46,7 +46,7 @@ bot.onText(/(\$[A-Za-z]{3,})/, async (message, match) => {
     priceBTC = `*BTC:* _${parseFloat(coinDetail.price_btc).toFixed(8)} BTC_`
     priceETH = `*ETH:* _${parseFloat(coinDetail.price_btc / getEthereum.price_btc).toFixed(8)} ETH_`
     priceDelta = `*24hr Change:* _${parseFloat(coinDetail.percent_change_24h)}%_ ${coinDetail.percent_change_24h.includes('-') ? '📉' : '📈'}`
-    link = `*Link:* ${SITE_BASE_URL}/currencies/${coinDetail.name.toLowerCase().replace(/\s+/, '-')}`
+    link = `*Link:* ${SITE_BASE_URL}/currencies/${coinDetail.name.toLowerCase().replace(/\s+/g, '-')}`
 
     reply = `💰 Here is the current price for *${name} (${symbol})*:\n\n${rank}\n${mCap}\n${priceUSD}\n${isBitcoin(inputSymbol) ? '' : `${priceBTC}\n`}${isEthereum(inputSymbol) ? '' : `${priceETH}\n`}${priceDelta}\n\n${link}`
   } else {
