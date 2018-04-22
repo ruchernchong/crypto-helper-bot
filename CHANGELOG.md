@@ -1,5 +1,8 @@
 # Changelog
 
+## Unreleased
+- Fixed a bug where event name is not returned properly
+
 ## v1.2.2
 - Fixed wrong regex expression for string replacement
 
