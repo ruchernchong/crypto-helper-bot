@@ -86,7 +86,7 @@ bot.onText(/\/event (.+)/, async (message, match) => {
     if (event) {
       reply = `📅 Here is an upcoming event for <b>${coin.name} (${coin.symbol})</b>:\n\n<b>Title:</b> ${event.title}\n<b>Date:</b> ${new Date(event.date_event).toLocaleDateString()}\n<b>Description:</b> ${event.description}\n\n<b>Source:</b> ${event.source}`
     } else {
-      reply = `There are no event(s) for <b>${coinList[coin]}</b>.`
+      reply = `There are no event(s) for <b>${coin.name} (${coin.symbol})</b>.`
     }
 
     bot.sendMessage(chatId, reply, { parse_mode: 'html' }).then(() => console.log(`Event found for ${inputSymbol}.`)).catch(error => console.log(error))
