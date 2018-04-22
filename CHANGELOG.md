@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## v1.2.3
 - Fixed a bug where event name is not returned properly
 
 ## v1.2.2
