@@ -21,7 +21,7 @@ bot.onText(/\/mcap/, async message => {
   bot.sendMessage(chatId, reply, { parse_mode: 'markdown' }).then(() => console.log('Total Market Cap in USD')).catch(error => console.log(error))
 })
 
-bot.onText(/(\$[A-Za-z]{3,})/, async (message, match) => {
+bot.onText(/(\$[A-Za-z]{2,})/, async (message, match) => {
   const chatId = message.chat.id
   const { input } = match
   const inputSymbol = input.replace('$', '')
