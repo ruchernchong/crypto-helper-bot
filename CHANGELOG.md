@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.2.4
+- Fixed unable to retrieve price for certain symbols
+
 ## v1.2.3
 - Fixed a bug where event name is not returned properly
 
