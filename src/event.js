@@ -1,6 +1,6 @@
 import axios from 'axios'
 import keys from './../keys.js'
-import { bot } from './config.js'
+import { bot, prefix } from './config.js'
 
 const CAL_BASE_URL = 'https://api.coinmarketcal.com'
 
@@ -65,7 +65,7 @@ bot.onText(/!events/, async message => {
   }).then(() => console.log(`Found events. Returning the ${maxEvents} latest events.`))
 })
 
-bot.onText(/!event (.+)/, async (message, match) => {
+bot.onText(RegExp(`${prefix}event (.+)`), async (message, match) => {
   const chatId = message.chat.id
   const inputSymbol = match[1].toUpperCase()
 

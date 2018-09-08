@@ -1,9 +1,9 @@
 import 'babel-polyfill'
-import { bot } from './config.js'
+import { bot, prefix } from './config.js'
 import './event.js'
 import './price.js'
 
-bot.onText(/\/start|!help/, (message, match) => {
+bot.onText(RegExp(`/start|${prefix}help`), (message, match) => {
   const chatId = message.chat.id
   const command = match[0]
 
