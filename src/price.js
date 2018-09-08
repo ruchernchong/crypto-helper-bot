@@ -32,27 +32,27 @@ bot.onText(/(\$[A-Za-z]{2,})/, async (message, match) => {
   const { input } = match
   const inputSymbol = input.replace('$', '').toUpperCase()
 
-  let coinDetail
-
-  coinDetail = await axios.get(`${API_BASE_URL}/v1/cryptocurrency/quotes/latest?symbol=${inputSymbol}`).then(response => {
-    return response.data.data[inputSymbol]
-  }).catch(error => console.log(error))
+  let coin = await axios.get(`${API_BASE_URL}/v1/cryptocurrency/quotes/latest?symbol=${inputSymbol}`)
+    .then(response => response.data.data[inputSymbol])
+    .catch(error => console.error(error))
 
   let reply, name, symbol, rank, mCap, priceUSD, priceDelta, link
 
-  if (coinDetail) {
-    name = coinDetail.name
-    symbol = coinDetail.symbol
-    rank = `*Rank:* _${coinDetail.cmc_rank}_`
-    mCap = `*Est. Market Cap (USD):* _$${parseFloat(coinDetail.quote.USD.market_cap).toLocaleString('en')}_`
-    priceUSD = `*USD:* _$${parseFloat(coinDetail.quote.USD.price).toLocaleString('en')}_`
-    priceDelta = `*24hr Change:* _${parseFloat(coinDetail.quote.USD.percent_change_24h).toFixed(2)}%_ ${coinDetail.quote.USD.percent_change_24h < 0 ? '📉' : '📈'}`
-    link = `*Link:* ${SITE_BASE_URL}/currencies/${coinDetail.name.toLowerCase().replace(/\s+/g, '-')}`
+  if (coin) {
+    name = coin.name
+    symbol = coin.symbol
+    rank = `*Rank:* _${coin.cmc_rank}_`
+    mCap = `*Est. Market Cap (USD):* _$${parseFloat(coin.quote.USD.market_cap).toLocaleString('en')}_`
+    priceUSD = `*USD:* _$${parseFloat(coin.quote.USD.price).toLocaleString('en')}_`
+    priceDelta = `*24hr Change:* _${parseFloat(coin.quote.USD.percent_change_24h).toFixed(2)}%_ ${coin.quote.USD.percent_change_24h < 0 ? '📉' : '📈'}`
+    link = `*Link:* ${SITE_BASE_URL}/currencies/${coin.name.toLowerCase().replace(/\s+/g, '-')}`
 
     reply = `💰 Here is the current price for *${name} (${symbol})*:\n\n${rank}\n${mCap}\n${priceUSD}\n${priceDelta}\n\n${link}`
   } else {
     reply = `Unable to find *${inputSymbol}*`
   }
 
-  bot.sendMessage(chatId, reply, { parse_mode: 'markdown' }).then(() => console.log(`Reply sent for ${inputSymbol}`)).catch(error => console.log(error))
+  bot.sendMessage(chatId, reply, { parse_mode: 'markdown' })
+    .then(() => console.log(`Reply sent for ${inputSymbol}`))
+    .catch(error => console.log(error))
 })
