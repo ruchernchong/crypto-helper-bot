@@ -10,9 +10,7 @@ axios.defaults.headers.common['X-CMC_PRO_API_KEY'] = COINMARKETCAP.API_KEY
 bot.onText(/\/mcap/, async message => {
   const chatId = message.chat.id
 
-  let data
-
-  data = await axios.get(`${API_BASE_URL}/v1/global-metrics/quotes/latest`).then(response => {
+  let data = await axios.get(`${API_BASE_URL}/v1/global-metrics/quotes/latest`).then(response => {
     return response.data
   })
 
