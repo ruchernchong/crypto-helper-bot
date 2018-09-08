@@ -23,8 +23,8 @@ bot.onText(/\/mcap/, async message => {
   const reply = `*Total Est. Market Cap (USD):* ${marketCap}\n*Bitcoin Dominance:* ${bitcoinDominance}\n*Ethereum Dominance:* ${ethereumDominance}`
 
   bot.sendMessage(chatId, reply, { parse_mode: 'markdown' })
-    .then(() => console.log('Total Market Cap in USD'))
-    .catch(error => console.log(error))
+    .then(() => console.info('Total Market Cap in USD'))
+    .catch(error => console.error(error))
 })
 
 bot.onText(/(\$[A-Za-z]{2,})/, async (message, match) => {
@@ -34,7 +34,7 @@ bot.onText(/(\$[A-Za-z]{2,})/, async (message, match) => {
 
   let coin = await axios.get(`${API_BASE_URL}/v1/cryptocurrency/quotes/latest?symbol=${inputSymbol}`)
     .then(response => response.data.data[inputSymbol])
-    .catch(error => console.error(error))
+    .catch(error => console.error(error.message))
 
   let reply, name, symbol, rank, mCap, priceUSD, priceDelta, link
 
@@ -53,6 +53,6 @@ bot.onText(/(\$[A-Za-z]{2,})/, async (message, match) => {
   }
 
   bot.sendMessage(chatId, reply, { parse_mode: 'markdown' })
-    .then(() => console.log(`Reply sent for ${inputSymbol}`))
-    .catch(error => console.log(error))
+    .then(() => console.info(`Reply sent for ${inputSymbol}`))
+    .catch(error => console.error(error.message))
 })
