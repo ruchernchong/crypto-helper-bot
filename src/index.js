@@ -1,6 +1,7 @@
-const { bot } = require('./config.js')
-require('./event.js')
-require('./price.js')
+import 'babel-polyfill'
+import { bot } from './config.js'
+import './event.js'
+import './price.js'
 
 bot.onText(/\/start|\/help/, (message, match) => {
   const chatId = message.chat.id
