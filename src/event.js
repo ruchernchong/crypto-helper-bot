@@ -1,6 +1,6 @@
-const keys = require('./../keys.js')
-const { bot } = require('./config.js')
-const axios = require('axios')
+import axios from 'axios'
+import keys from './../keys.js'
+import { bot } from './config.js'
 
 const CAL_BASE_URL = 'https://api.coinmarketcal.com'
 
