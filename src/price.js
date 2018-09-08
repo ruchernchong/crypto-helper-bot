@@ -1,6 +1,6 @@
-const axios = require('axios')
-const { bot } = require('./config.js')
-const { COINMARKETCAP } = require('./../keys')
+import axios from 'axios'
+import { bot } from './config.js'
+import { COINMARKETCAP } from './../keys'
 
 const SITE_BASE_URL = 'https://coinmarketcap.com'
 const API_BASE_URL = 'https://pro-api.coinmarketcap.com'
