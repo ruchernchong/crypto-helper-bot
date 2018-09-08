@@ -33,7 +33,7 @@ const getCoinList = async () => {
   console.log('Coinmarketcal data has been assigned to the global variable.')
 }
 
-bot.onText(/\/events/, async message => {
+bot.onText(/!events/, async message => {
   const chatId = message.chat.id
 
   let strEvent
@@ -65,7 +65,7 @@ bot.onText(/\/events/, async message => {
   }).then(() => console.log(`Found events. Returning the ${maxEvents} latest events.`))
 })
 
-bot.onText(/\/event (.+)/, async (message, match) => {
+bot.onText(/!event (.+)/, async (message, match) => {
   const chatId = message.chat.id
   const inputSymbol = match[1].toUpperCase()
 
