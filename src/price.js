@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { bot } from './config.js'
+import { bot, prefix } from './config.js'
 import { COINMARKETCAP } from './../keys'
 
 const SITE_BASE_URL = 'https://coinmarketcap.com'
@@ -7,7 +7,7 @@ const API_BASE_URL = 'https://pro-api.coinmarketcap.com'
 
 axios.defaults.headers.common['X-CMC_PRO_API_KEY'] = COINMARKETCAP.API_KEY
 
-bot.onText(/!mcap/, async message => {
+bot.onText(RegExp(`${prefix}mcap`), async message => {
   const chatId = message.chat.id
 
   let data = await axios.get(`${API_BASE_URL}/v1/global-metrics/quotes/latest`).then(response => {
