@@ -7,13 +7,13 @@ const CAL_BASE_URL = 'https://api.coinmarketcal.com'
 let accessToken, coinList
 
 const auth = () => {
-  return axios.get(`${CAL_BASE_URL}/oauth/v2/token`, {
-    params: {
-      grant_type: 'client_credentials',
-      client_id: keys.COINMARKETCAL.CLIENT_ID,
-      client_secret: keys.COINMARKETCAL.CLIENT_SECRET
-    }
-  })
+  const params = {
+    grant_type: 'client_credentials',
+    client_id: keys.COINMARKETCAL.CLIENT_ID,
+    client_secret: keys.COINMARKETCAL.CLIENT_SECRET
+  }
+
+  return axios.get(`${CAL_BASE_URL}/oauth/v2/token`, { params })
 }
 
 auth().then(async response => {
@@ -22,33 +22,29 @@ auth().then(async response => {
 })
 
 const getCoinList = async () => {
-  coinList = await axios.get(`${CAL_BASE_URL}/v1/coins`, {
-    params: {
-      access_token: accessToken
-    }
-  }).then(response => {
-    return response.data
-  }).catch(error => console.log(error))
+  const params = { access_token: accessToken }
+
+  coinList = await axios.get(`${CAL_BASE_URL}/v1/coins`, { params })
+    .then(response => response.data)
+    .catch(error => console.error(error))
 
   console.log('Coinmarketcal data has been assigned to the global variable.')
 }
 
-bot.onText(/!events/, async message => {
+bot.onText(RegExp(`${prefix}events`), async message => {
   const chatId = message.chat.id
 
   let strEvent
   const maxEvents = 3
 
-  let events
+  const params = {
+    access_token: accessToken,
+    max: maxEvents
+  }
 
-  events = await axios.get(`${CAL_BASE_URL}/v1/events`, {
-    params: {
-      access_token: accessToken,
-      max: maxEvents
-    }
-  }).then(response => {
-    return response.data
-  }).catch(error => console.log(error))
+  let events = await axios.get(`${CAL_BASE_URL}/v1/events`, { params })
+    .then(response => response.data)
+    .catch(error => console.error(error))
 
   strEvent = `📅 Here are the latest <i>${maxEvents}</i> events:\n\n`
 
@@ -62,7 +58,8 @@ bot.onText(/!events/, async message => {
   bot.sendMessage(chatId, strEvent, {
     parse_mode: 'html',
     disable_web_page_preview: true
-  }).then(() => console.log(`Found events. Returning the ${maxEvents} latest events.`))
+  })
+    .then(() => console.log(`Found events. Returning the ${maxEvents} latest events.`))
 })
 
 bot.onText(RegExp(`${prefix}event (.+)`), async (message, match) => {
@@ -72,16 +69,16 @@ bot.onText(RegExp(`${prefix}event (.+)`), async (message, match) => {
   const coin = coinList.find(list => list.symbol.includes(inputSymbol))
 
   if (coin) {
-    let event, reply
+    let reply
 
-    event = await axios.get(`${CAL_BASE_URL}/v1/events`, {
-      params: {
-        access_token: accessToken,
-        coins: coin.id
-      }
-    }).then(response => {
-      return response.data[0]
-    }).catch(error => console.log(error))
+    const params = {
+      access_token: accessToken,
+      coins: coin.id
+    }
+
+    let event = await axios.get(`${CAL_BASE_URL}/v1/events`, { params })
+      .then(response => response.data[0])
+      .catch(error => console.log(error))
 
     if (event) {
       reply = `📅 Here is an upcoming event for <b>${coin.name} (${coin.symbol})</b>:\n\n<b>Title:</b> ${event.title}\n<b>Date:</b> ${new Date(event.date_event).toLocaleDateString()}\n<b>Description:</b> ${event.description}\n\n<b>Source:</b> ${event.source}`
@@ -89,10 +86,14 @@ bot.onText(RegExp(`${prefix}event (.+)`), async (message, match) => {
       reply = `There are no event(s) for <b>${coin.name} (${coin.symbol})</b>.`
     }
 
-    bot.sendMessage(chatId, reply, { parse_mode: 'html' }).then(() => console.log(`Event found for ${inputSymbol}.`)).catch(error => console.log(error))
+    bot.sendMessage(chatId, reply, { parse_mode: 'html' })
+      .then(() => console.log(`Event found for ${inputSymbol}.`))
+      .catch(error => console.log(error))
   } else {
     const reply = `Unable to find *${inputSymbol}*.`
 
-    bot.sendMessage(chatId, reply, { parse_mode: 'markdown' }).then(() => console.log(`Unable to find ${inputSymbol}.`)).catch(error => console.log(error))
+    bot.sendMessage(chatId, reply, { parse_mode: 'markdown' })
+      .then(() => console.log(`Unable to find ${inputSymbol}.`))
+      .catch(error => console.log(error))
   }
 })
