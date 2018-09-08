@@ -30,7 +30,7 @@ bot.onText(/\/mcap/, async message => {
 bot.onText(/(\$[A-Za-z]{2,})/, async (message, match) => {
   const chatId = message.chat.id
   const { input } = match
-  const inputSymbol = input.replace('$', '').toUpperCase()
+  const inputSymbol = input.split('$')[1].toUpperCase()
 
   let coin = await axios.get(`${API_BASE_URL}/v1/cryptocurrency/quotes/latest?symbol=${inputSymbol}`)
     .then(response => response.data.data[inputSymbol])
