@@ -11,10 +11,11 @@ You will need to have a valid [Telegram](https://telegram.org) account in order 
 You can add the bot in Telegram [@CryptoHelperBot](https://t.me/CryptoHelperBot). This username had been finalised by the Telegram team. Shout out to them for changing to a more official username! 
 
 ```
-/events - Display 3 of the latest events
-/event <symbol> - Display event(s) for the particular coin
+!events - Display 3 of the latest events
+!event <symbol> - Display event(s) for the particular coin
 $<symbol> - Display the price for the particular coin
-/mcap - Display the total market capitalisation and Bitcoin dominance
+!mcap - Display the total market capitalisation and Bitcoin dominance
+!help - Launches the help menu
 ```
 
 ## License
