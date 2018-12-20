@@ -1,4 +1,3 @@
-import 'babel-polyfill'
 import { bot, prefix } from './config.js'
 import './event.js'
 import './price.js'
