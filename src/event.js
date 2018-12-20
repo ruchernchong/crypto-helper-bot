@@ -24,7 +24,8 @@ auth().then(async response => {
 const getCoinList = async () => {
   const params = { access_token: accessToken }
 
-  coinList = await axios.get(`${CAL_BASE_URL}/v1/coins`, { params })
+  coinList = await axios
+    .get(`${CAL_BASE_URL}/v1/coins`, { params })
     .then(response => response.data)
     .catch(error => console.error(error))
 
@@ -42,7 +43,8 @@ bot.onText(RegExp(`${prefix}events`), async message => {
     max: maxEvents
   }
 
-  let events = await axios.get(`${CAL_BASE_URL}/v1/events`, { params })
+  let events = await axios
+    .get(`${CAL_BASE_URL}/v1/events`, { params })
     .then(response => response.data)
     .catch(error => console.error(error))
 
@@ -52,14 +54,21 @@ bot.onText(RegExp(`${prefix}events`), async message => {
     const coinName = event.coins[0].name
     const coinSymbol = event.coins[0].symbol
 
-    strEvent += `<b>${coinName} (${coinSymbol})</b>\n<b>Title:</b> ${event.title}\n<b>Date:</b> ${new Date(event.date_event).toLocaleDateString()}\n<b>Details:</b> ${event.source}\n\n`
+    strEvent += `<b>${coinName} (${coinSymbol})</b>\n<b>Title:</b> ${
+      event.title
+    }\n<b>Date:</b> ${new Date(
+      event.date_event
+    ).toLocaleDateString()}\n<b>Details:</b> ${event.source}\n\n`
   })
 
-  bot.sendMessage(chatId, strEvent, {
-    parse_mode: 'html',
-    disable_web_page_preview: true
-  })
-    .then(() => console.log(`Found events. Returning the ${maxEvents} latest events.`))
+  bot
+    .sendMessage(chatId, strEvent, {
+      parse_mode: 'html',
+      disable_web_page_preview: true
+    })
+    .then(() =>
+      console.log(`Found events. Returning the ${maxEvents} latest events.`)
+    )
 })
 
 bot.onText(RegExp(`${prefix}event (.+)`), async (message, match) => {
@@ -76,23 +85,32 @@ bot.onText(RegExp(`${prefix}event (.+)`), async (message, match) => {
       coins: coin.id
     }
 
-    let event = await axios.get(`${CAL_BASE_URL}/v1/events`, { params })
+    let event = await axios
+      .get(`${CAL_BASE_URL}/v1/events`, { params })
       .then(response => response.data[0])
       .catch(error => console.log(error))
 
     if (event) {
-      reply = `📅 Here is an upcoming event for <b>${coin.name} (${coin.symbol})</b>:\n\n<b>Title:</b> ${event.title}\n<b>Date:</b> ${new Date(event.date_event).toLocaleDateString()}\n<b>Description:</b> ${event.description}\n\n<b>Source:</b> ${event.source}`
+      reply = `📅 Here is an upcoming event for <b>${coin.name} (${
+        coin.symbol
+      })</b>:\n\n<b>Title:</b> ${event.title}\n<b>Date:</b> ${new Date(
+        event.date_event
+      ).toLocaleDateString()}\n<b>Description:</b> ${
+        event.description
+      }\n\n<b>Source:</b> ${event.source}`
     } else {
       reply = `There are no event(s) for <b>${coin.name} (${coin.symbol})</b>.`
     }
 
-    bot.sendMessage(chatId, reply, { parse_mode: 'html' })
+    bot
+      .sendMessage(chatId, reply, { parse_mode: 'html' })
       .then(() => console.log(`Event found for ${inputSymbol}.`))
       .catch(error => console.log(error))
   } else {
     const reply = `Unable to find *${inputSymbol}*.`
 
-    bot.sendMessage(chatId, reply, { parse_mode: 'markdown' })
+    bot
+      .sendMessage(chatId, reply, { parse_mode: 'markdown' })
       .then(() => console.log(`Unable to find ${inputSymbol}.`))
       .catch(error => console.log(error))
   }
