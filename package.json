@@ -9,7 +9,7 @@
   "private": false,
   "scripts": {
     "start": "nodemon --exec babel-node src/index.js",
-    "build": "rimraf build && babel src -d build",
+    "build": "babel src -d build",
     "lint": "eslint --ext .js src"
   },
   "dependencies": {
@@ -30,8 +30,7 @@
     "husky": "^1.0.1",
     "lint-staged": "^7.3.0",
     "nodemon": "^1.18.9",
-    "prettier": "^1.14.3",
-    "rimraf": "^2.6.2"
+    "prettier": "^1.14.3"
   },
   "husky": {
     "hooks": {
