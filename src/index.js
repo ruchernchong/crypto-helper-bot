@@ -8,7 +8,7 @@ bot.onText(RegExp(`/start|${prefix}help`), (message, match) => {
 
   let reply = ''
 
-  if (command === '!help') {
+  if (command === `${prefix}help`) {
     reply += `Hello ${
       message.from.first_name
     }, I see you are having some trouble with me. Do not worry, I am here to help!\n\n`
