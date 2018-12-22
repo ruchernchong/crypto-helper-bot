@@ -4,10 +4,10 @@ const { marketCap, coinInfo } = require('./src/price')
 const { events, event } = require('./src/event')
 
 /**
+ * Send any message to the respective Telegram chat
  *
  * @param {number} chatId
  * @param {string} message
- * @param {string} parseMode
  * @returns {Promise<void>}
  */
 const sendMessageToTelegram = async (chatId, message) => {
@@ -20,6 +20,12 @@ const sendMessageToTelegram = async (chatId, message) => {
   )
 }
 
+/**
+ * Process the commands that are available on this bot
+ *
+ * @param {string} message
+ * @returns {Promise<string>}
+ */
 const processCommands = async message => {
   let response
 
@@ -42,6 +48,12 @@ const processCommands = async message => {
   return response
 }
 
+/**
+ * The main AWS Lambda function
+ *
+ * @param {object} event
+ * @param {object} context
+ */
 exports.handler = (event, context) => {
   const body = JSON.parse(event.body)
   const chatId = body.message.chat.id

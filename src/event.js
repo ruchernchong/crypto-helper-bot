@@ -4,6 +4,10 @@ const CAL_BASE_URL = 'https://api.coinmarketcal.com'
 
 let accessToken, coinList
 
+/**
+ * Authenticate with CoinMarketCal
+ * @returns {AxiosPromise<any>}
+ */
 const auth = () => {
   const params = {
     grant_type: 'client_credentials',
@@ -20,6 +24,11 @@ auth().then(async response => {
   await getCoinList()
 })
 
+/**
+ * Retrieve the list of coins from CoinMarketCal
+ *
+ * @returns {Promise<void>}
+ */
 const getCoinList = async () => {
   const params = { access_token: accessToken }
 
@@ -31,6 +40,11 @@ const getCoinList = async () => {
   console.log('Coinmarketcal data has been assigned to the global variable.')
 }
 
+/**
+ * Retrieve the 3 most recent events from CoinMarketCal
+ *
+ * @returns {Promise<string>}
+ */
 const events = async () => {
   let strEvent
 
@@ -62,6 +76,12 @@ const events = async () => {
   return strEvent
 }
 
+/**
+ * Retrieve the upcoming event for the particular coin given by its symbol
+ *
+ * @param {string} message
+ * @returns {Promise<string>}
+ */
 const event = async message => {
   const inputSymbol = message.split(' ')[1].toUpperCase()
 

@@ -1,3 +1,9 @@
+/**
+ * Set the /start message in Telegram
+ *
+ * @param message
+ * @returns {string}
+ */
 const start = message => {
   let reply
 
@@ -19,6 +25,12 @@ const start = message => {
   return reply
 }
 
+/**
+ * Sets the text for the help command in Telegram
+ *
+ * @param message
+ * @returns {string}
+ */
 const help = message => {
   let reply
 
