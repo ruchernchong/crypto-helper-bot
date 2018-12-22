@@ -67,4 +67,4 @@ typings/
 
 .idea/
 keys.js
-build/
+tmp/
