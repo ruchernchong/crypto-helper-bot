@@ -1,52 +1,49 @@
-import axios from 'axios'
-import { bot, prefix } from './config.js'
-import { COINMARKETCAP } from './../keys'
+const axios = require('axios').default
 
 const SITE_BASE_URL = 'https://coinmarketcap.com'
 const API_BASE_URL = 'https://pro-api.coinmarketcap.com'
 
-axios.defaults.headers.common['X-CMC_PRO_API_KEY'] = COINMARKETCAP.API_KEY
+axios.defaults.headers.common['X-CMC_PRO_API_KEY'] =
+  process.env.COINMARKETCAP_API_KEY
 
-bot.onText(RegExp(`${prefix}mcap`), async message => {
-  const chatId = message.chat.id
-
-  let data = await axios
+/**
+ * Retrieve the Global Market Capitalisation from CoinMarketCap
+ *
+ * @returns {Promise<string>}
+ */
+const marketCap = async () => {
+  const data = await axios
     .get(`${API_BASE_URL}/v1/global-metrics/quotes/latest`)
-    .then(response => {
-      return response.data
-    })
+    .then(response => response.data.data)
+    .catch(err => console.error(err))
 
   const marketCap = `_$${parseFloat(
-    data.data.quote.USD.total_market_cap
+    data.quote.USD.total_market_cap
   ).toLocaleString('en')}_`
-  const bitcoinDominance = `_${parseFloat(data.data.btc_dominance).toFixed(
-    2
-  )}%_`
-  const ethereumDominance = `_${parseFloat(data.data.eth_dominance).toFixed(
-    2
-  )}%_`
+  const bitcoinDominance = `_${parseFloat(data.btc_dominance).toFixed(2)}%_`
+  const ethereumDominance = `_${parseFloat(data.eth_dominance).toFixed(2)}%_`
 
-  const reply = `*Total Est. Market Cap (USD):* ${marketCap}\n*Bitcoin Dominance:* ${bitcoinDominance}\n*Ethereum Dominance:* ${ethereumDominance}`
+  return `*Total Est. Market Cap (USD):* ${marketCap}\n*Bitcoin Dominance:* ${bitcoinDominance}\n*Ethereum Dominance:* ${ethereumDominance}`
+}
 
-  bot
-    .sendMessage(chatId, reply, { parse_mode: 'markdown' })
-    .then(() => console.info('Total Market Cap in USD'))
-    .catch(error => console.error(error))
-})
+/**
+ * Retrieve the price information of a particular coin given by its symbol
+ *
+ * @param {string} input
+ * @returns {Promise<string>}
+ */
+const coinInfo = async input => {
+  const inputSymbol = input.split(' ')[1].toUpperCase()
 
-bot.onText(/(\$[A-Za-z]{2,})/, async (message, match) => {
-  const chatId = message.chat.id
-  const { input } = match
-  const inputSymbol = input.split('$')[1].toUpperCase()
-
-  let coin = await axios
+  const coin = await axios
     .get(
       `${API_BASE_URL}/v1/cryptocurrency/quotes/latest?symbol=${inputSymbol}`
     )
     .then(response => response.data.data[inputSymbol])
-    .catch(error => console.error(error.message))
+    .catch(error => console.error(error))
 
-  let reply, name, symbol, rank, mCap, priceUSD, priceDelta, link
+  let reply
+  let name, symbol, rank, mCap, priceUSD, priceDelta, link
 
   if (coin) {
     name = coin.name
@@ -70,8 +67,7 @@ bot.onText(/(\$[A-Za-z]{2,})/, async (message, match) => {
     reply = `Unable to find *${inputSymbol}*`
   }
 
-  bot
-    .sendMessage(chatId, reply, { parse_mode: 'markdown' })
-    .then(() => console.info(`Reply sent for ${inputSymbol}`))
-    .catch(error => console.error(error.message))
-})
+  return reply
+}
+
+module.exports = { marketCap, coinInfo }
