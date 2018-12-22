@@ -1,6 +1,4 @@
-import axios from 'axios'
-import keys from './../keys.js'
-import { bot, prefix } from './config.js'
+const axios = require('axios').default
 
 const CAL_BASE_URL = 'https://api.coinmarketcal.com'
 
@@ -9,8 +7,8 @@ let accessToken, coinList
 const auth = () => {
   const params = {
     grant_type: 'client_credentials',
-    client_id: keys.COINMARKETCAL.CLIENT_ID,
-    client_secret: keys.COINMARKETCAL.CLIENT_SECRET
+    client_id: process.env.COINMARKETCAL_CLIENT_ID,
+    client_secret: process.env.COINMARKETCAL_CLIENT_SECRET
   }
 
   return axios.get(`${CAL_BASE_URL}/oauth/v2/token`, { params })
@@ -18,6 +16,7 @@ const auth = () => {
 
 auth().then(async response => {
   accessToken = response.data.access_token
+
   await getCoinList()
 })
 
@@ -32,10 +31,9 @@ const getCoinList = async () => {
   console.log('Coinmarketcal data has been assigned to the global variable.')
 }
 
-bot.onText(RegExp(`${prefix}events`), async message => {
-  const chatId = message.chat.id
-
+const events = async () => {
   let strEvent
+
   const maxEvents = 3
 
   const params = {
@@ -43,7 +41,7 @@ bot.onText(RegExp(`${prefix}events`), async message => {
     max: maxEvents
   }
 
-  let events = await axios
+  const events = await axios
     .get(`${CAL_BASE_URL}/v1/events`, { params })
     .then(response => response.data)
     .catch(error => console.error(error))
@@ -61,39 +59,31 @@ bot.onText(RegExp(`${prefix}events`), async message => {
     ).toLocaleDateString()}\n<b>Details:</b> ${event.source}\n\n`
   })
 
-  bot
-    .sendMessage(chatId, strEvent, {
-      parse_mode: 'html',
-      disable_web_page_preview: true
-    })
-    .then(() =>
-      console.log(`Found events. Returning the ${maxEvents} latest events.`)
-    )
-})
+  return strEvent
+}
 
-bot.onText(RegExp(`${prefix}event (.+)`), async (message, match) => {
-  const chatId = message.chat.id
-  const inputSymbol = match[1].toUpperCase()
+const event = async message => {
+  const inputSymbol = message.split(' ')[1].toUpperCase()
 
   const coin = coinList.find(list => list.symbol.includes(inputSymbol))
 
-  if (coin) {
-    let reply
+  let reply
 
+  if (coin) {
     const params = {
       access_token: accessToken,
       coins: coin.id
     }
 
-    let event = await axios
+    const event = await axios
       .get(`${CAL_BASE_URL}/v1/events`, { params })
       .then(response => response.data[0])
-      .catch(error => console.log(error))
+      .catch(error => console.error(error))
 
     if (event) {
       reply = `📅 Here is an upcoming event for <b>${coin.name} (${
         coin.symbol
-      })</b>:\n\n<b>Title:</b> ${event.title}\n<b>Date:</b> ${new Date(
+      })</b>:\n\n<b>Title:</b> ${event.title}\n<b>Date:</b>${new Date(
         event.date_event
       ).toLocaleDateString()}\n<b>Description:</b> ${
         event.description
@@ -101,17 +91,11 @@ bot.onText(RegExp(`${prefix}event (.+)`), async (message, match) => {
     } else {
       reply = `There are no event(s) for <b>${coin.name} (${coin.symbol})</b>.`
     }
-
-    bot
-      .sendMessage(chatId, reply, { parse_mode: 'html' })
-      .then(() => console.log(`Event found for ${inputSymbol}.`))
-      .catch(error => console.log(error))
   } else {
-    const reply = `Unable to find *${inputSymbol}*.`
-
-    bot
-      .sendMessage(chatId, reply, { parse_mode: 'markdown' })
-      .then(() => console.log(`Unable to find ${inputSymbol}.`))
-      .catch(error => console.log(error))
+    reply = `Unable to find *${inputSymbol}*.`
   }
-})
+
+  return reply
+}
+
+module.exports = { events, event }
