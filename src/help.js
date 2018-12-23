@@ -7,7 +7,7 @@
 const start = message => {
   let reply
 
-  reply += `Hello ${
+  reply = `Hello ${
     message.from.first_name
   } and thank you for using me! This will get you started.\n\n`
 
@@ -34,7 +34,7 @@ const start = message => {
 const help = message => {
   let reply
 
-  reply += `Hello ${
+  reply = `Hello ${
     message.from.first_name
   }, I see you are having some trouble with me. Do not worry, I am here to help!\n\n`
 

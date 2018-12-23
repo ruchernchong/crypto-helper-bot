@@ -1,5 +1,5 @@
 const axios = require('axios').default
-const { start, help } = require('./src/help')
+// const { start, help } = require('./src/help')
 const { marketCap, coinInfo } = require('./src/price')
 const { events, event } = require('./src/event')
 
@@ -15,7 +15,8 @@ const sendMessageToTelegram = async (chatId, message) => {
     `https://api.telegram.org/bot${process.env.TELEGRAM_TOKEN}/sendMessage`,
     {
       chat_id: chatId,
-      text: message
+      text: message,
+      parse_mode: 'HTML'
     }
   )
 }
@@ -29,20 +30,22 @@ const sendMessageToTelegram = async (chatId, message) => {
 const processCommands = async message => {
   let response
 
+  const command = message.split(' ')[0]
+
   if (message.match(/\/start/)) {
-    response = await start(message)
-  } else if (message.match(/(!help)/)) {
-    response = await help(message)
-  } else if (message.match(/!mcap/)) {
+    // response = await start(message)
+  } else if (message.match(/\/help/)) {
+    // response = await help(message)
+  } else if (message.match(/\/mcap/)) {
     response = await marketCap()
-  } else if (message.match(/(!price [A-Za-z]{2,})/)) {
+  } else if (message.match(/\/price [A-Za-z]{2,}/)) {
     response = await coinInfo(message)
-  } else if (message.match(/!events/)) {
+  } else if (message.match(/\/events/)) {
     response = await events()
-  } else if (message.match(/(!event [A-Za-z]{2,})/)) {
+  } else if (message.match(/\/event [A-Za-z]{2,}/)) {
     response = await event(message)
   } else {
-    response = `The command ${message} is an invalid command`
+    response = `The command <code>${command}</code> is an invalid command`
   }
 
   return response
