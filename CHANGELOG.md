@@ -1,5 +1,22 @@
 # Changelog
 
+## v3.0.0-beta.1
+- Moved code to be compatible with AWS Lambda
+
+## v2.0.3
+- Add Prettier for code formatting
+
+## v2.0.2
+- Assign consistent prefixes
+- Minor backend improvements
+
+## v2.0.1
+- Make commands cleaner. Replaces / prefix with ! prefix
+
+## v2.0.0
+- Upgraded application to use CoinMarketCap's Pro API
+- Added Babel configuration for ES6 compatibility
+
 ## v1.2.4
 - Fixed unable to retrieve price for certain symbols
 
