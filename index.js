@@ -1,7 +1,5 @@
 const axios = require('axios').default
 // const { start, help } = require('./src/help')
-const { marketCap, coinInfo } = require('./src/price')
-const { events, event } = require('./src/event')
 
 /**
  * Send any message to the respective Telegram chat
@@ -33,17 +31,19 @@ const processCommands = async message => {
   const command = message.split(' ')[0]
 
   if (message.match(/\/start/)) {
+    response = 'Function is currently not working'
     // response = await start(message)
   } else if (message.match(/\/help/)) {
+    response = 'Function is currently not working'
     // response = await help(message)
   } else if (message.match(/\/mcap/)) {
-    response = await marketCap()
+    response = await require('./src/price').marketCap()
   } else if (message.match(/\/price [A-Za-z]{2,}/)) {
-    response = await coinInfo(message)
+    response = await require('./src/price').coinInfo(message)
   } else if (message.match(/\/events/)) {
-    response = await events()
+    response = await require('./src/event').events()
   } else if (message.match(/\/event [A-Za-z]{2,}/)) {
-    response = await event(message)
+    response = await require('./src/event').event(message)
   } else {
     response = `The command <code>${command}</code> is an invalid command`
   }
