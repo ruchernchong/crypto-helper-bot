@@ -4,7 +4,7 @@
   "description": "A Telegram bot designed as a helper for Cryptocurrency.",
   "main": "index.js",
   "repository": "https://github.com/ruchern/crypto-helper.git",
-  "author": "Ru Chern Chong <me@ruchern.com>",
+  "author": "Ru Chern Chong <hello@ruchern.net>",
   "license": "MIT",
   "private": false,
   "scripts": {
