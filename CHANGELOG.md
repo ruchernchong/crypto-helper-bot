@@ -1,5 +1,8 @@
 # Changelog
 
+## v3.0.0-beta.3
+- Fixed a package publishing error
+
 ## v3.0.0-beta.2 
 - Updated code base to use a more dynamic way to call the commands
 
