@@ -2,27 +2,47 @@ version: 2
 jobs:
   lint:
     docker:
-    - image: circleci/node:latest
+      - image: circleci/node:10
+    working_directory: ~/project
     steps:
-    - checkout
-    - restore_cache:
-        keys:
-        - v1-dependencies-{{ checksum "package.json" }}
-        - v1-dependencies-
-    - run:
-        name: Install packages
-        command: yarn
-    - save_cache:
-        paths:
-        - node_modules/
-        key: v1-dependencies-{{ checksum "package.json" }}
-    - run:
-        name: Run linter
-        command: |
-          yarn lint
+      - checkout
+      - attach_workspace:
+          at: ~/project
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
+      - run:
+          name: Install packages
+          command: yarn --production
+      - save_cache:
+          paths:
+            - node_modules/
+          key: v1-dependencies-{{ checksum "package.json" }}
+      - run:
+          name: Run linter
+          command: |
+            yarn lint
+
+  deploy:
+    docker:
+      - image: circleci/node:10
+    working_directory: ~/project
+    steps:
+      - checkout:
+      - attach_workspace:
+          at: ~/project
+      - run:
+          name: Deploy to Lambda
+          command: |
+            sudo apt-get install awscli
+            zip -r build.zip *.js node_modules/* && aws lambda --region ap-southeast-1 update-function-code --function-name ${FUNCTION_NAME} --zip-file fileb://~/project/build.zip
 
 workflows:
   version: 2
-  lint:
+  lint-deploy:
     jobs:
-    - lint
+      - lint
+      - deploy:
+          requires:
+            - lint
