@@ -1,6 +1,6 @@
-const axios = require('axios').default
-const helper = require('./helper')
-const commands = require('./commands')
+const axios = require('axios').default;
+const helper = require('./helper');
+const commands = require('./commands');
 
 /**
  * Send any message to the respective Telegram chat
@@ -17,8 +17,8 @@ const sendMessageToTelegram = async (chatId, message) => {
       text: message,
       parse_mode: 'HTML'
     }
-  )
-}
+  );
+};
 
 /**
  * Process the commands that are available on this bot
@@ -28,29 +28,29 @@ const sendMessageToTelegram = async (chatId, message) => {
  */
 const processCommands = async message => {
   if (message) {
-    const args = helper.parseCommand(message.trim())
+    const args = helper.parseCommand(message.trim());
 
     if (args === null) {
-      await commands.error(`The command <code>${message}</code> is invalid.`)
+      await commands.error(`The command <code>${message}</code> is invalid.`);
     }
 
-    const keys = Object.keys(args)
+    const keys = Object.keys(args);
 
     if (keys.length === 0 && !commands[keys[0]]) {
-      await commands.error(`The command <code>${message}</code> is invalid.`)
+      await commands.error(`The command <code>${message}</code> is invalid.`);
     }
 
-    const command = keys[0]
+    const command = keys[0];
 
-    const commandExist = Object.keys(commands).includes(command)
+    const commandExist = Object.keys(commands).includes(command);
 
     if (commandExist) {
-      return commands[command](args[command])
+      return commands[command](args[command]);
     } else {
-      await commands.error(`The command <code>${message}</code> is invalid.`)
+      await commands.error(`The command <code>${message}</code> is invalid.`);
     }
   }
-}
+};
 
 /**
  * The main AWS Lambda function
@@ -59,19 +59,19 @@ const processCommands = async message => {
  * @param {object} context AWS Lambda uses this parameter to provide your handler the runtime information of the Lambda function that is executing.
  */
 exports.handler = (event, context) => {
-  const body = JSON.parse(event.body)
-  const chatId = body.message.chat.id
-  const message = body.message.text
+  const body = JSON.parse(event.body);
+  const chatId = body.message.chat.id;
+  const message = body.message.text;
 
   processCommands(message)
     .then(response => {
       sendMessageToTelegram(chatId, response)
         .then(response => context.succeed({ response }))
-        .catch(() => context.fail())
+        .catch(() => context.fail());
     })
     .catch(error => {
       sendMessageToTelegram(chatId, error.message)
         .then(response => context.succeed({ response }))
-        .catch(() => context.fail())
-    })
-}
+        .catch(() => context.fail());
+    });
+};
