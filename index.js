@@ -58,6 +58,6 @@ exports.handler = (event, context) => {
   processCommands(message).then(response => {
     sendMessageToTelegram(chatId, response)
       .then(response => context.succeed({ response }))
-      .catch(error => console.error(error))
+      .catch(error => context.fail(error))
   })
 }
