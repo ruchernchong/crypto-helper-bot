@@ -19,10 +19,6 @@ jobs:
           paths:
             - node_modules/
           key: v1-dependencies-{{ checksum "package.json" }}
-      - run:
-          name: Run linter
-          command: |
-            yarn lint
 
   deploy:
     docker:

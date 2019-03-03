@@ -7,19 +7,10 @@
   "author": "Ru Chern Chong <hello@ruchern.net>",
   "license": "MIT",
   "private": false,
-  "scripts": {
-    "lint": "eslint --ext .js src"
-  },
   "dependencies": {
     "axios": "^0.18.0"
   },
   "devDependencies": {
-    "eslint": "^5.14.0",
-    "eslint-config-standard": "^12.0.0",
-    "eslint-plugin-import": "^2.16.0",
-    "eslint-plugin-node": "^8.0.1",
-    "eslint-plugin-promise": "^4.0.1",
-    "eslint-plugin-standard": "^4.0.0",
     "husky": "^1.3.1",
     "lint-staged": "^8.1.5",
     "prettier": "^1.16.4"
@@ -32,7 +23,6 @@
   "lint-staged": {
     "*.js": [
       "prettier",
-      "eslint --fix",
       "git add"
     ]
   }
