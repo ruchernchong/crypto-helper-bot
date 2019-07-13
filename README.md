@@ -1,6 +1,6 @@
 # Crypto Helper
 [![GitHub releases](https://img.shields.io/github/release/ruchern/crypto-helper.svg?style=for-the-badge)](https://github.com/ruchern/crypto-helper/releases)
-[![GitHub license](https://img.shields.io/github/license/ruchern/crypto-helper.svg?style=for-the-badge)](https://github.com/ruchern/crypto-helper/blob/master/LICENSE)
+[![GitHub license](https://img.shields.io/github/license/ruchern/crypto-helper.svg?style=for-the-badge)](https://github.com/ruchern/crypto-helper/blob/master/LICENSE) [![Greenkeeper badge](https://badges.greenkeeper.io/ruchern/crypto-helper.svg)](https://greenkeeper.io/)
 
 A Telegram bot to provide prices and news on cryptocurrencies.
 
