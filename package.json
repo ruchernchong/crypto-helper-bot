@@ -2,35 +2,33 @@
   "name": "crypto-helper-bot",
   "version": "2.0.4",
   "description": "A Telegram bot designed as a helper for Cryptocurrency.",
-  "main": "build/index.js",
+  "main": "dist/src/index.js",
   "repository": "https://github.com/ruchern/crypto-helper.git",
   "author": "Ru Chern Chong <dev@ruchern.xyz>",
   "license": "MIT",
   "private": false,
   "scripts": {
-    "start": "nodemon --exec babel-node src/index.js",
+    "start": "nodemon",
     "build": "babel src -d build",
+    "build:watch": "tsc --watch",
     "lint": "eslint --ext .js src"
   },
   "dependencies": {
     "axios": "^0.21.1",
-    "node-telegram-bot-api": "^0.30.0"
+    "node-telegram-bot-api": "0.53.0"
   },
   "devDependencies": {
     "@babel/cli": "7.13.16",
     "@babel/core": "7.14.2",
     "@babel/node": "^7.2.2",
     "@babel/preset-env": "^7.2.0",
-    "eslint": "^5.5.0",
-    "eslint-config-standard": "^12.0.0",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-node": "^7.0.1",
-    "eslint-plugin-promise": "^4.0.1",
-    "eslint-plugin-standard": "^4.0.0",
+    "@types/node": "15.0.3",
+    "@types/node-telegram-bot-api": "0.51.1",
     "husky": "^1.0.1",
     "lint-staged": "11.0.0",
-    "nodemon": "^1.18.9",
-    "prettier": "^1.14.3"
+    "nodemon": "2.0.7",
+    "prettier": "2.3.0",
+    "typescript": "4.2.4"
   },
   "husky": {
     "hooks": {
@@ -40,8 +38,7 @@
   "lint-staged": {
     "*.js": [
       "prettier --write",
-      "git add",
-      "eslint --fix"
+      "git add"
     ]
   }
 }
