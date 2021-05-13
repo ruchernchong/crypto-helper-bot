@@ -1,12 +1,8 @@
-import axios from 'axios';
 import { bot, prefix } from './config';
 
 import { fetchGlobalMetrics, fetchQuote } from './api';
 
 const SITE_BASE_URL = 'https://coinmarketcap.com';
-
-axios.defaults.headers.common['X-CMC_PRO_API_KEY'] =
-  process.env.COINMARKETCAP_API_KEY;
 
 bot.onText(RegExp(`${prefix}mcap`), async (message) => {
   const chatId: number = message.chat.id;

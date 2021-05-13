@@ -2,18 +2,19 @@
   "name": "crypto-helper-bot",
   "version": "2.1.0",
   "description": "A Telegram bot designed as a helper for Cryptocurrency.",
-  "main": "dist/src/index.js",
+  "main": "dist/index.js",
   "repository": "https://github.com/ruchern/crypto-helper.git",
   "author": "Ru Chern Chong <dev@ruchern.xyz>",
   "license": "MIT",
   "private": false,
   "scripts": {
     "start": "nodemon",
-    "build": "tsc",
+    "build": "tsc && typedoc",
     "build:watch": "tsc --watch"
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "node-fetch": "2.6.1",
     "node-telegram-bot-api": "0.53.0"
   },
   "devDependencies": {
@@ -22,11 +23,14 @@
     "@babel/node": "^7.2.2",
     "@babel/preset-env": "^7.2.0",
     "@types/node": "15.0.3",
+    "@types/node-fetch": "2.5.10",
     "@types/node-telegram-bot-api": "0.51.1",
+    "dotenv": "9.0.2",
     "husky": "4.3.8",
     "lint-staged": "11.0.0",
     "nodemon": "2.0.7",
     "prettier": "2.3.0",
+    "typedoc": "0.20.36",
     "typescript": "4.2.4"
   },
   "husky": {

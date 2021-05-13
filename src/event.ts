@@ -11,7 +11,6 @@ bot.onText(RegExp(`${prefix}events`), async (message) => {
   const maxEvents: number = 3;
 
   const events: CoinEvent[] = await fetchEvents(maxEvents);
-  console.log(`events`, events);
 
   strEvent = `📅 Here are the latest <i>${maxEvents}</i> events:\n\n`;
 
@@ -41,7 +40,6 @@ bot.onText(RegExp(`${prefix}event (.+)`), async (message, match) => {
   const inputSymbol: string = match?.[1].toUpperCase() || '';
 
   const coinList = await fetchCoinList();
-  console.log(`coinList`, coinList);
 
   const coin = coinList.find((list: Coin) => list.symbol.includes(inputSymbol));
 
@@ -53,11 +51,9 @@ bot.onText(RegExp(`${prefix}event (.+)`), async (message, match) => {
     if (event) {
       reply = `📅 Here is an upcoming event for <b>${coin.name} (${
         coin.symbol
-      })</b>:\n\n<b>Title:</b> ${event.title}\n<b>Date:</b> ${new Date(
+      })</b>:\n\n<b>Title:</b> ${event.title.en}\n<b>Date:</b> ${new Date(
         event.date_event
-      ).toLocaleDateString()}\n<b>Description:</b> ${
-        event.description
-      }\n\n<b>Source:</b> ${event.source}`;
+      ).toLocaleDateString()}\n\n<b>Source:</b> ${event.source}`;
     } else {
       reply = `There are no event(s) for <b>${coin.name} (${coin.symbol})</b>.`;
     }
