@@ -1,65 +1,81 @@
-import { bot, prefix } from './config';
+import dedent from 'dedent';
+import { bot } from './config';
 
 import { fetchGlobalMetrics, fetchQuote } from './api';
+import { commarise, formatPercentage, formatPrice, slugify } from './utils';
+
+import { Coin } from './types';
 
 const SITE_BASE_URL = 'https://coinmarketcap.com';
 
-bot.onText(RegExp(`${prefix}mcap`), async (message) => {
-  const chatId: number = message.chat.id;
+bot.command('mcap', async (ctx) => {
+  const globalMetrics = await fetchGlobalMetrics();
+  const {
+    btc_dominance,
+    eth_dominance,
+    quote: {
+      USD: { last_updated, total_market_cap }
+    }
+  } = globalMetrics;
 
-  const data = await fetchGlobalMetrics();
+  const marketCap = `_${commarise(total_market_cap)}_`;
+  const bitcoinDominance = `_${formatPercentage(btc_dominance)}_`;
+  const ethereumDominance = `_${formatPercentage(eth_dominance)}_`;
 
-  const marketCap = `_$${parseFloat(
-    data.data.quote.USD.total_market_cap
-  ).toLocaleString('en')}_`;
-  const bitcoinDominance = `_${parseFloat(data.data.btc_dominance).toFixed(
-    2
-  )}%_`;
-  const ethereumDominance = `_${parseFloat(data.data.eth_dominance).toFixed(
-    2
-  )}%_`;
+  const reply = dedent`
+    *Total Est. Market Cap (USD):* ${marketCap}
 
-  const reply = `*Total Est. Market Cap (USD):* ${marketCap}\n*Bitcoin Dominance:* ${bitcoinDominance}\n*Ethereum Dominance:* ${ethereumDominance}`;
+    *Bitcoin Dominance:* ${bitcoinDominance}
+    *Ethereum Dominance:* ${ethereumDominance}
 
-  bot
-    .sendMessage(chatId, reply, { parse_mode: 'Markdown' })
-    .then(() => console.info('Total Market Cap in USD'))
+    Last updated: ${[
+      new Date(last_updated).toLocaleDateString(),
+      new Date(last_updated).toLocaleTimeString()
+    ].join(' ')}
+    `;
+
+  ctx
+    .replyWithMarkdown(reply)
+    .then(() => console.info('Reply sent for global metrics'))
     .catch((e: Error) => console.error(e));
 });
 
-bot.onText(/(\$[A-Za-z]{2,})/, async (message, match) => {
-  const chatId = message.chat.id;
-  const input: string = match?.input || '';
-  const inputSymbol = input.split('$')[1].toUpperCase();
+bot.hears(/(\$[A-Za-z]{2,})/, async (ctx) => {
+  const {
+    message: { text }
+  } = ctx;
+  const inputSymbol = text.split('$')[1].toUpperCase();
 
-  const coin = await fetchQuote(inputSymbol);
+  const coin: Coin = await fetchQuote(inputSymbol);
+  const { cmc_rank: rank, name, quote, symbol } = coin;
+  const {
+    USD: { market_cap: marketCap, percent_change_24h, price }
+  } = quote;
+  const directionOfChange: string = percent_change_24h < 0 ? '📉' : '📈';
 
-  let reply, name, symbol, rank, mCap, priceUSD, priceDelta, link;
+  let reply: string;
 
   if (coin) {
-    name = coin.name;
-    symbol = coin.symbol;
-    rank = `*Rank:* _${coin.cmc_rank}_`;
-    mCap = `*Est. Market Cap (USD):* _$${parseFloat(
-      coin.quote.USD.market_cap
-    ).toLocaleString('en')}_`;
-    priceUSD = `*USD:* _$${parseFloat(coin.quote.USD.price).toLocaleString(
-      'en'
-    )}_`;
-    priceDelta = `*24hr Change:* _${parseFloat(
-      coin.quote.USD.percent_change_24h
-    ).toFixed(2)}%_ ${coin.quote.USD.percent_change_24h < 0 ? '📉' : '📈'}`;
-    link = `*Link:* ${SITE_BASE_URL}/currencies/${coin.name
-      .toLowerCase()
-      .replace(/\s+/g, '-')}`;
+    reply = dedent`
+      💰 Here is the current price for *${name} (${symbol})*:
 
-    reply = `💰 Here is the current price for *${name} (${symbol})*:\n\n${rank}\n${mCap}\n${priceUSD}\n${priceDelta}\n\n${link}`;
+      *Rank:* _${rank}_
+      *Est. Market Cap (USD):* _$${commarise(marketCap)}_
+      *USD:* _${formatPrice(price, 8)}_
+      *24hr Change:* _${formatPercentage(
+        percent_change_24h
+      )}%_ ${directionOfChange}
+
+      *Link:* ${SITE_BASE_URL}/currencies/${slugify(name)}
+    `;
   } else {
-    reply = `Unable to find *${inputSymbol}*`;
+    reply = dedent`
+      Unable to find *${inputSymbol}*
+    `;
   }
 
-  bot
-    .sendMessage(chatId, reply, { parse_mode: 'Markdown' })
+  ctx
+    .replyWithMarkdown(reply)
     .then(() => console.info(`Reply sent for ${inputSymbol}`))
     .catch((e: Error) => console.error(e.message));
 });

@@ -4,9 +4,7 @@ import { fetchCoinEvent, fetchCoinList, fetchEvents } from './api';
 
 import { Coin, CoinEvent } from './types';
 
-bot.onText(RegExp(`${prefix}events`), async (message) => {
-  const chatId: number = message.chat.id;
-
+bot.hears(RegExp(`${prefix}events`), async (ctx) => {
   let strEvent: string;
   const maxEvents: number = 3;
 
@@ -25,9 +23,8 @@ bot.onText(RegExp(`${prefix}events`), async (message) => {
     ).toLocaleDateString()}\n<b>Details:</b> ${event.source}\n\n`;
   });
 
-  bot
-    .sendMessage(chatId, strEvent, {
-      parse_mode: 'HTML',
+  ctx
+    .replyWithHTML(strEvent, {
       disable_web_page_preview: true
     })
     .then(() =>
@@ -35,9 +32,9 @@ bot.onText(RegExp(`${prefix}events`), async (message) => {
     );
 });
 
-bot.onText(RegExp(`${prefix}event (.+)`), async (message, match) => {
-  const chatId: number = message.chat.id;
-  const inputSymbol: string = match?.[1].toUpperCase() || '';
+bot.hears(RegExp(`${prefix}event (.+)`), async (ctx) => {
+  const inputSymbol: string = 'BTC';
+  // const inputSymbol: string = match?.[1].toUpperCase() || '';
 
   const coinList = await fetchCoinList();
 
@@ -58,17 +55,15 @@ bot.onText(RegExp(`${prefix}event (.+)`), async (message, match) => {
       reply = `There are no event(s) for <b>${coin.name} (${coin.symbol})</b>.`;
     }
 
-    bot
-      .sendMessage(chatId, reply, {
-        parse_mode: 'HTML'
-      })
+    ctx
+      .replyWithHTML(reply)
       .then(() => console.log(`Event found for ${inputSymbol}.`))
       .catch((e: Error) => console.error(e));
   } else {
     const reply: string = `Unable to find *${inputSymbol}*.`;
 
-    bot
-      .sendMessage(chatId, reply, { parse_mode: 'Markdown' })
+    ctx
+      .replyWithMarkdown(reply)
       .then(() => console.log(`Unable to find ${inputSymbol}.`))
       .catch((e: Error) => console.error(e));
   }
