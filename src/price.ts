@@ -28,7 +28,7 @@ bot.command('mcap', async (ctx) => {
     *Bitcoin Dominance:* ${bitcoinDominance}
     *Ethereum Dominance:* ${ethereumDominance}
 
-    Last updated: ${[
+    *Last updated:* ${[
       new Date(last_updated).toLocaleDateString(),
       new Date(last_updated).toLocaleTimeString()
     ].join(' ')}

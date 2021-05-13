@@ -20,13 +20,13 @@ bot.start((ctx) => {
 
     *Events*
     !events - Display 3 of the latest events
-    !event <symbol> - Display event(s) for the particular coin
+    (e.g. \`!event $BTC\`) - Display event(s) for the particular coin
 
     *Prices*
-    $<symbol> - Display the price for the particular coin
-    !mcap - Display the total market capitalisation and Bitcoin dominance
+    (e.g. \`$BTC\`) - Display the price for the particular coin
+    /mcap - Display the total market capitalisation and Bitcoin dominance
 
-    As always, you are welcome to use the !help command to bring this page up again at anytime within the bot's chat.
+    As always, you are welcome to use the /help command to bring this page up at anytime inside this chat.
   `;
 
   ctx
