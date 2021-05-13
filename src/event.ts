@@ -47,7 +47,6 @@ bot.onText(RegExp(`${prefix}event (.+)`), async (message, match) => {
     let reply;
 
     const event: CoinEvent = await fetchCoinEvent(coin);
-    console.log(event);
 
     if (event) {
       reply = `📅 Here is an upcoming event for <b>${coin.name} (${
