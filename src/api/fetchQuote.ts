@@ -10,6 +10,6 @@ const API_BASE_URL = 'https://pro-api.coinmarketcap.com';
 const fetchQuote = (symbol: string) =>
   apiFetch(
     `${API_BASE_URL}/v1/cryptocurrency/quotes/latest?symbol=${symbol}`
-  ).then(({ data }) => data.data[symbol]);
+  ).then(({ data }) => data[symbol]);
 
 export default fetchQuote;
