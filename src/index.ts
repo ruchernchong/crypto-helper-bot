@@ -1,66 +1,74 @@
-import dotenv from 'dotenv';
-import dedent from 'dedent';
-dotenv.config();
-import { bot } from './config.js';
-import './event.js';
-import './price.js';
+import { bot, prefix } from './config/bot.js';
+import {
+  getCoinFromEvents,
+  getEventFromCoin,
+  getGlobalMetrics,
+  getPriceFromSymbol,
+  getRecentEvents,
+  help,
+  start
+} from './functions';
 
-bot.start((ctx) => {
-  const {
-    message: {
-      from: { first_name },
-      text
-    }
-  } = ctx;
+bot.start((ctx) => start(ctx));
+bot.help((ctx) => help(ctx));
 
-  const reply: string = dedent`
-    Hello ${first_name} and thank you for using me! This will get you started.
-
-    You can control me with the follow commands:
-
-    *Events*
-    !events - Display 3 of the latest events
-    (e.g. \`!event $BTC\`) - Display event(s) for the particular coin
-
-    *Prices*
-    (e.g. \`$BTC\`) - Display the price for the particular coin
-    /mcap - Display the total market capitalisation and Bitcoin dominance
-
-    As always, you are welcome to use the /help command to bring this page up at anytime inside this chat.
-  `;
+bot.command('mcap', async (ctx) => {
+  const reply = await getGlobalMetrics();
 
   ctx
     .replyWithMarkdown(reply)
-    .then(() => console.info(`Message sent for ${text} command`))
+    .then(() => console.info('Reply sent for global metrics'))
     .catch((e: Error) => console.error(e));
 });
 
-bot.help((ctx) => {
-  const {
-    message: {
-      from: { first_name },
-      text
-    }
-  } = ctx;
+bot.hears(/(\$[A-Za-z]{2,})/, async (ctx) => {
+  const { message } = ctx;
+  const { text } = message;
 
-  const reply: string = dedent`
-    Hello ${first_name}, I see you are having some trouble with me. Do not worry, I am here to help!
+  const inputSymbol = text.split('$')[1].toUpperCase();
 
-    You can control me with the follow commands:
-
-    *Events*
-    !events - Display 3 of the latest events
-    !event <symbol> - Display event(s) for the particular coin
-
-    *Prices*
-    $<symbol> - Display the price for the particular coin
-    !mcap - Display the total market capitalisation and Bitcoin dominance
-
-    As always, you are welcome to use the !help command to bring this page up again at anytime within the bot's chat.
-  `;
+  const reply = await getPriceFromSymbol(inputSymbol);
 
   ctx
     .replyWithMarkdown(reply)
-    .then(() => console.info(`Message sent for ${text} command`))
-    .catch((e: Error) => console.error(e));
+    .then(() => console.info(`Reply sent for ${inputSymbol}`))
+    .catch((e: Error) => console.error(e.message));
+});
+
+bot.command('events', async (ctx) => {
+  const maxEvents: number = 3;
+  const reply = await getRecentEvents(maxEvents);
+
+  ctx
+    .replyWithHTML(reply, {
+      disable_web_page_preview: true
+    })
+    .then(() =>
+      console.info(`Found events. Returning the ${maxEvents} latest events.`)
+    );
+});
+
+bot.hears(RegExp(`${prefix}event (.+)`), async (ctx) => {
+  const { message } = ctx;
+  const { text } = message;
+
+  const inputSymbol: string = text.split(`${prefix}event `)?.[1].toUpperCase();
+
+  const coin = await getCoinFromEvents(inputSymbol);
+
+  if (coin) {
+    const reply = await getEventFromCoin(coin);
+
+    ctx
+      .replyWithHTML(reply)
+      .then(() => console.info(`Event found for ${inputSymbol}.`))
+      .catch((e: Error) => console.error(e));
+  } else {
+    const reply: string = `Unable to find *${inputSymbol}*.`;
+
+    ctx
+      .replyWithMarkdown(reply)
+      .then(() => console.info(`Unable to find ${inputSymbol}.`))
+      .catch((e: Error) => console.error(e));
+  }
 });
