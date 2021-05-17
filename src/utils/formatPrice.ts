@@ -1,4 +1,5 @@
 /**
+ * Format a value to a valid price
  *
  * @param value
  * @param decimalPlaces
