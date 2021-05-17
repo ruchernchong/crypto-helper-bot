@@ -9,7 +9,7 @@
   "exclude": ["node_modules"],
   "include": ["**/*.ts"],
   "typedocOptions": {
-    "entryPoints": ["src/"],
+    "entryPoints": ["src"],
     "exclude": "**/*.js",
     "out": "docs"
   },
