@@ -1,6 +1,7 @@
 import dedent from 'dedent';
-import { Coin, CoinEvent } from '../types';
+
 import { fetchEvents } from '../api';
+import type { Coin, CoinEvent } from '../types';
 
 /**
  * Get the number of recent events no more than the max given

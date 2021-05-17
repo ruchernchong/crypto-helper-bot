@@ -1,7 +1,6 @@
-import { CoinEvent } from '../types';
 import apiFetch from './helpers/apiFetch';
-
-const CAL_BASE_URL: string = 'https://developers.coinmarketcal.com/v1';
+import { CAL_BASE_URL } from '../config';
+import type { CoinEvent } from '../types';
 
 /**
  * Fetch all upcoming events based on the max number given

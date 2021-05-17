@@ -1,5 +1,5 @@
-import { Coin } from '../types';
 import { fetchCoinList } from '../api';
+import type { Coin } from '../types';
 
 /**
  * Fetch the list of coins on the events calendar

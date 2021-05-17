@@ -1,6 +1,7 @@
 import dedent from 'dedent';
+
 import { fetchCoinEvent } from '../api';
-import { Coin, CoinEvent } from '../types';
+import type { Coin, CoinEvent } from '../types';
 
 /**
  * Get the event for the given coin

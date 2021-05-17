@@ -2,7 +2,7 @@ import dedent from 'dedent';
 
 import { fetchQuote } from '../api';
 import { commarise, formatPercentage, formatPrice, slugify } from '../utils';
-import { Coin } from '../types';
+import type { Coin } from '../types';
 
 const SITE_BASE_URL = 'https://coinmarketcap.com';
 

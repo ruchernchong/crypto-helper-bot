@@ -1,4 +1,4 @@
-import { bot, prefix } from './config/bot.js';
+import { bot, prefix } from './config/bot';
 import {
   getCoinFromEvents,
   getEventFromCoin,

@@ -1,4 +1,5 @@
 import dedent from 'dedent';
+
 import { fetchGlobalMetrics } from '../api';
 import { commarise, formatPercentage } from '../utils';
 
