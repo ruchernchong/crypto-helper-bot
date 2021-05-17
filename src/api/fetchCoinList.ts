@@ -1,6 +1,5 @@
 import apiFetch from './helpers/apiFetch';
-
-const CAL_BASE_URL: string = 'https://developers.coinmarketcal.com/v1';
+import { CAL_BASE_URL } from '../config';
 
 /**
  * Fetch all coins from CoinMarketCal

@@ -1,6 +1,6 @@
 # Crypto Helper
-[![GitHub releases](https://img.shields.io/github/release/ruchern/crypto-helper.svg?style=for-the-badge)](https://github.com/ruchern/crypto-helper/releases)
-[![GitHub license](https://img.shields.io/github/license/ruchern/crypto-helper.svg?style=for-the-badge)](https://github.com/ruchern/crypto-helper/blob/master/LICENSE)
+[![GitHub releases](https://img.shields.io/github/release/ruchern-chong/crypto-helper.svg?style=for-the-badge)](https://github.com/ruchern-chong/crypto-helper/releases)
+[![GitHub license](https://img.shields.io/github/license/ruchern-chong/crypto-helper.svg?style=for-the-badge)](https://github.com/ruchern-chong/crypto-helper/blob/master/LICENSE)
 
 A Telegram bot to provide prices and news on cryptocurrencies.
 
@@ -11,11 +11,12 @@ You will need to have a valid [Telegram](https://telegram.org) account in order 
 You can add the bot in Telegram [@CryptoHelperBot](https://t.me/CryptoHelperBot). This username had been finalised by the Telegram team. Shout out to them for changing to a more official username!
 
 ```
-!events - Display 3 of the latest events
-!event <symbol> - Display event(s) for the particular coin
+/start - Launch the helper text
+/events - Display 3 of the latest events
+/event <symbol> - Display event(s) for the particular coin
 $<symbol> - Display the price for the particular coin
-!mcap - Display the total market capitalisation and Bitcoin dominance
-!help - Launches the help menu
+/mcap - Display the total market capitalisation and Bitcoin dominance
+/help - Launch the helper text
 ```
 
 ## License

@@ -1,7 +1,6 @@
-import { Coin, CoinEvent } from '../types';
 import apiFetch from './helpers/apiFetch';
-
-const CAL_BASE_URL: string = 'https://developers.coinmarketcal.com/v1';
+import { CAL_BASE_URL } from '../config';
+import type { Coin, CoinEvent } from '../types';
 
 /**
  * Fetch the event for a particular coin

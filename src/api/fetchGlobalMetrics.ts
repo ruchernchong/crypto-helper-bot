@@ -1,6 +1,5 @@
 import apiFetch from './helpers/apiFetch';
-
-const API_BASE_URL = 'https://pro-api.coinmarketcap.com';
+import { API_BASE_URL } from '../config';
 
 /**
  * Fetch information on the cryptocurrency market capitalisation
