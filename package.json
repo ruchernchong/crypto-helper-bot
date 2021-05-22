@@ -15,26 +15,27 @@
     "test:watch": "jest --watch"
   },
   "dependencies": {
-    "axios": "^0.21.1",
+    "axios": "0.21.1",
+    "dedent": "0.7.0",
+    "dotenv": "10.0.0",
     "node-fetch": "2.6.1",
     "telegraf": "4.3.0"
   },
   "devDependencies": {
     "@babel/cli": "7.13.16",
     "@babel/core": "7.14.2",
-    "@babel/node": "^7.2.2",
+    "@babel/node": "7.2.2",
     "@babel/preset-env": "7.14.2",
     "@babel/preset-typescript": "7.13.0",
     "@types/jest": "26.0.23",
     "@types/node": "15.0.3",
     "@types/node-fetch": "2.5.10",
-    "dedent": "0.7.0",
-    "dotenv": "9.0.2",
     "husky": "4.3.8",
     "jest": "26.6.3",
     "lint-staged": "11.0.0",
     "nodemon": "2.0.7",
     "prettier": "2.3.0",
+    "serverless-offline": "7.0.0",
     "typedoc": "0.20.36",
     "typescript": "4.2.4"
   },
