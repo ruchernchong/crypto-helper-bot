@@ -20,4 +20,7 @@ jobs:
       - run: yarn
       - run: yarn test
       - run: yarn build
-      - run: yarn serverless:deploy
+      - name: Deploy to AWS Lambda
+        run: |
+          yarn serverless config credentials --provider aws --key ${{ secrets.AWS_ACCESS_KEY_ID }} --secret ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          yarn serverless deploy
