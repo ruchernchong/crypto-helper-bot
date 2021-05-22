@@ -21,6 +21,10 @@ jobs:
       - run: yarn test
       - run: yarn build
       - name: Deploy to AWS Lambda
+        env:
+          COINMARKETCAP_API_KEY: ${{ secrets.COINMARKETCAP_API_KEY }}
+          COINMARKETCAL_API_KEY: ${{ secrets.COINMARKETCAL_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
         run: |
           yarn serverless config credentials --provider aws --key ${{ secrets.AWS_ACCESS_KEY_ID }} --secret ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           yarn serverless deploy

@@ -14,9 +14,9 @@ provider:
   endpointType: regional
 
   environment:
-    COINMARKETCAP_API_KEY: ${file(./serverless.env.yml):COINMARKETCAP_API_KEY, ''}
-    COINMARKETCAL_API_KEY: ${file(./serverless.env.yml):COINMARKETCAL_API_KEY, ''}
-    TELEGRAM_BOT_TOKEN: ${file(./serverless.env.yml):TELEGRAM_BOT_TOKEN, ''}
+    COINMARKETCAP_API_KEY: ${env:COINMARKETCAP_API_KEY, ''}
+    COINMARKETCAL_API_KEY: ${env:COINMARKETCAL_API_KEY, ''}
+    TELEGRAM_BOT_TOKEN: ${env:TELEGRAM_BOT_TOKEN, ''}
 
 functions:
   index:
