@@ -11,6 +11,7 @@
     "start": "nodemon",
     "build": "tsc && typedoc",
     "build:watch": "tsc --watch",
+    "serverless:deploy": "serverless deploy",
     "test": "jest",
     "test:watch": "jest --watch"
   },
