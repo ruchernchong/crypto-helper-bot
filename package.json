@@ -35,6 +35,7 @@
     "lint-staged": "11.0.0",
     "nodemon": "2.0.7",
     "prettier": "2.3.0",
+    "serverless": "2.43.0",
     "serverless-offline": "7.0.0",
     "typedoc": "0.20.36",
     "typescript": "4.2.4"
