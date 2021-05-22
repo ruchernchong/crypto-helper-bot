@@ -68,3 +68,5 @@ typings/
 .idea/
 dist/
 docs/
+
+serverless.env.yml

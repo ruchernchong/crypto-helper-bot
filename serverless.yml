@@ -1,0 +1,35 @@
+service: crypto-helper-bot
+
+plugins:
+  - serverless-offline
+
+provider:
+  lambdaHashingVersion: 20201221
+  name: aws
+  runtime: nodejs14.x
+  stage: prod
+  region: ap-southeast-1
+  memorySize: 128
+  timeout: 5
+  endpointType: regional
+
+  environment:
+    COINMARKETCAP_API_KEY: ${file(./serverless.env.yml):COINMARKETCAP_API_KEY, ''}
+    COINMARKETCAL_API_KEY: ${file(./serverless.env.yml):COINMARKETCAL_API_KEY, ''}
+    TELEGRAM_BOT_TOKEN: ${file(./serverless.env.yml):TELEGRAM_BOT_TOKEN, ''}
+
+functions:
+  index:
+    handler: dist/handler.index
+    events:
+      - http:
+          path: webhook
+          method: post
+          cors: true
+  set-webhook:
+    handler: dist/handler.setWebhook
+    events:
+      - http:
+          path: setWebhook
+          method: post
+          cors: true
