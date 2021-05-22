@@ -1,6 +1,6 @@
-# Crypto Helper
-[![GitHub releases](https://img.shields.io/github/release/ruchern-chong/crypto-helper.svg?style=for-the-badge)](https://github.com/ruchern-chong/crypto-helper/releases)
-[![GitHub license](https://img.shields.io/github/license/ruchern-chong/crypto-helper.svg?style=for-the-badge)](https://github.com/ruchern-chong/crypto-helper/blob/master/LICENSE)
+# Crypto Helper Bot
+[![GitHub releases](https://img.shields.io/github/release/ruchern-chong/crypto-helper-bot.svg?style=for-the-badge)](https://github.com/ruchern-chong/crypto-helper-bot/releases)
+[![GitHub license](https://img.shields.io/github/license/ruchern-chong/crypto-helper-bot.svg?style=for-the-badge)](https://github.com/ruchern-chong/crypto-helper-bot/blob/master/LICENSE)
 
 A Telegram bot to provide prices and news on cryptocurrencies.
 
