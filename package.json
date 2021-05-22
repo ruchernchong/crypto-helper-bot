@@ -40,6 +40,9 @@
     "typedoc": "0.20.36",
     "typescript": "4.2.4"
   },
+  "resolutions": {
+    "yargs-parser": "^13.1.2"
+  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged && yarn test"
