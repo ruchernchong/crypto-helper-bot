@@ -14,13 +14,13 @@ const SITE_BASE_URL = 'https://coinmarketcap.com';
 const getPriceFromSymbol = async (inputSymbol: string): Promise<string> => {
   const coin: Coin = await fetchQuote(inputSymbol);
 
-  const { cmc_rank, name, quote, symbol } = coin;
-  const {
-    USD: { market_cap, percent_change_24h, price }
-  } = quote;
-  const directionOfChange: string = percent_change_24h < 0 ? '📉' : '📈';
-
   if (coin) {
+    const { cmc_rank, name, quote, symbol } = coin;
+    const {
+      USD: { market_cap, percent_change_24h, price }
+    } = quote;
+    const directionOfChange: string = percent_change_24h < 0 ? '📉' : '📈';
+
     return dedent`
       💰 Here is the current price for *${name} (${symbol})*:
 
