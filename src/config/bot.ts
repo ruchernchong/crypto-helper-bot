@@ -31,7 +31,7 @@ bot.hears(/(\$[A-Za-z]{2,})/, async (ctx) => {
   const { message } = ctx;
   const { text } = message;
 
-  const inputSymbol = text.split('$')[1].toUpperCase();
+  const inputSymbol = text.toUpperCase().replace(/\$/g, '');
 
   const reply = await getPriceFromSymbol(inputSymbol);
 
