@@ -1,7 +1,11 @@
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 import dedent from 'dedent';
 
 import { fetchGlobalMetrics } from '../api';
 import { commarise, formatPercentage } from '../utils';
+
+dayjs.extend(relativeTime);
 
 /**
  * Get the global data for the entire Cryptocurrency market
@@ -27,10 +31,7 @@ const getGlobalMetrics = async (): Promise<string> => {
     *Bitcoin Dominance:* ${bitcoinDominance}
     *Ethereum Dominance:* ${ethereumDominance}
 
-    *Last updated:* ${[
-      new Date(last_updated).toLocaleDateString(),
-      new Date(last_updated).toLocaleTimeString()
-    ].join(' ')}
+    *Last updated:* ${dayjs().to(last_updated)}
     `;
 };
 
