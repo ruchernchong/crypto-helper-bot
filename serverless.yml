@@ -1,5 +1,7 @@
 service: crypto-helper-bot
 
+useDotenv: true
+
 plugins:
   - serverless-offline
 
