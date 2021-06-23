@@ -54,7 +54,7 @@ bot.command('events', async (ctx) => {
     );
 });
 
-bot.hears(RegExp(`${PREFIX}event (.+)`), async (ctx) => {
+bot.hears(RegExp(`${PREFIX}event (\w)`), async (ctx) => {
   const { message } = ctx;
   const { text } = message;
 
