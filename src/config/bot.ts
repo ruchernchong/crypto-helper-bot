@@ -27,7 +27,7 @@ bot.command('mcap', async (ctx) => {
     .catch((e: Error) => console.error(e));
 });
 
-bot.hears(/(\$[A-Za-z]{2,})/, async (ctx) => {
+bot.hears(/^(\$[A-Za-z]{2,})/, async (ctx) => {
   const { message } = ctx;
   const { text } = message;
 
@@ -54,11 +54,14 @@ bot.command('events', async (ctx) => {
     );
 });
 
-bot.hears(RegExp(`${PREFIX}event (\w)`), async (ctx) => {
+bot.hears(RegExp(`${PREFIX}event (.+)`), async (ctx) => {
   const { message } = ctx;
   const { text } = message;
 
-  const inputSymbol: string = text.split(`${PREFIX}event `)?.[1].toUpperCase();
+  const inputSymbol: string = text
+    .replace('$', '')
+    .split(`${PREFIX}event `)?.[1]
+    .toUpperCase();
 
   const coin = await getCoinFromEvents(inputSymbol);
 
