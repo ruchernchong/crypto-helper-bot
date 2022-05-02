@@ -8,7 +8,7 @@ A Telegram bot to provide prices and news on cryptocurrencies.
 You will need to have a valid [Telegram](https://telegram.org) account in order to use this bot.
 
 ## Usage
-You can add the bot in Telegram [@CryptoHelperBot](https://t.me/CryptoHelperBot). This username had been finalised by the Telegram team. Shout out to them for changing to a more official username!
+You can add the bot in Telegram [@CryptoHelperBetaBot](https://t.me/CryptoHelperBetaBot).
 
 ```
 /start - Launch the helper text
